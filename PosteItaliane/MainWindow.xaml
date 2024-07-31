@@ -1,0 +1,182 @@
+﻿<Window x:Class="PosteItaliane.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PosteItaliane"
+        mc:Ignorable="d"
+        Title="LoginView" Height="550" Width="800"
+        WindowStyle="ThreeDBorderWindow"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown">
+    <Border CornerRadius="12">
+        <Border CornerRadius="10"
+                BorderThickness="2"
+                Opacity="0.95">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="GhostWhite" Offset="0"/>
+                    <GradientStop Color="Blue" Offset="0.75"/>
+                    <GradientStop Color="Yellow" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Grid.Row="1" Margin="300,35,300,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Image Source="pack://application:,,,/Images/Logo.png"
+                           Width="100" Height="100"
+                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <TextBlock Text="Username"
+                               Foreground="Black"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"                             
+                               Margin="0,35,0,0"
+                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <TextBox x:Name="txtUser"
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Black"
+                             BorderThickness="0,0,0,2"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="20,0,0,0"
+                             Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Images/user-icon.png"
+                                    Stretch="None"
+                                    AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+
+                    <TextBlock Text="Password"
+                               Foreground="Black"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"                             
+                               Margin="0,15,0,75"
+                               Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <PasswordBox x:Name="txtPass"
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Black"
+                             BorderThickness="0,0,0,2"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="20,0,0,0"
+                             Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                        <PasswordBox.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Images/key-icon.png"
+                                    Stretch="None"
+                                    AlignmentX="Left"/>
+                        </PasswordBox.Background>
+                    </PasswordBox>
+
+                    <Button x:Name="btnLogin"                          
+                            BorderThickness="0"
+                            Content="Log In"
+                            Foreground="White"
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"
+                            Margin="0,137,0,-87"
+                            Click="btnLogin_Click"
+                            Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#462AD8"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#28AEED"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="150" Height="40"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Grid Grid.Row="1" Margin="141,0,-104,0" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                    </Grid>
+                </Grid>
+                <TextBlock Text="Non sei iscritto?"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Foreground="Black"
+                               FontSize="10"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Margin="0,315,0,0"
+                               Grid.Row="1"/>
+
+                <TextBlock Text="Registrati"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Foreground="Blue"
+                               FontSize="10"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Cursor="Hand"
+                               Margin="0,337,0,0"
+                               Grid.Row="1" 
+                               MouseDown="TextBlock_Registrati_MouseDown"/>
+            </Grid>
+        </Border>
+    </Border>
+</Window>
