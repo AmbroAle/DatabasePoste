@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PosteItaliane.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="800"
       Title="Login">
 
     <Border>
@@ -30,14 +30,6 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
                 <Grid Grid.Row="1" Margin="300,35,300,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -117,7 +109,7 @@
                     BorderThickness="0"
                     Content="Log In"
                     Foreground="White"
-                    FontSize="12"
+                    FontSize="14"
                     FontFamily="Montserrat"
                     Cursor="Hand"
                     Margin="0,137,0,-87"

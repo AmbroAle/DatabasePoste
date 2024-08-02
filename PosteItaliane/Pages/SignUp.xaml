@@ -44,8 +44,8 @@
 
         <DockPanel Margin="10" LastChildFill="True">
             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <StackPanel Margin="10" Width="300" HorizontalAlignment="Center">
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <StackPanel Margin="10" Width="350" HorizontalAlignment="Center">
                         <!-- Codice Fiscale -->
                         <TextBlock Text="Codice Fiscale"
                                    HorizontalAlignment="Center"
@@ -65,7 +65,8 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
 
                         <!-- Nome -->
                         <TextBlock Text="Nome"
@@ -86,7 +87,8 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
 
                         <!-- Via -->
                         <TextBlock Text="Via"
@@ -107,7 +109,8 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
 
                         <!-- Comune -->
                         <TextBlock Text="Comune"
@@ -128,10 +131,33 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
+
+                        <!-- Email -->
+                        <TextBlock Text="Email"
+                                   HorizontalAlignment="Center"
+                                   Foreground="Black"
+                                   FontSize="14"
+                                   FontWeight="Medium"
+                                   FontFamily="Montserrat"                             
+                                   Margin="10"/>
+
+                        <TextBox x:Name="txtEmail"
+                                 FontSize="13"
+                                 FontWeight="Medium"
+                                 FontFamily="Montserrat"                            
+                                 Foreground="Black"
+                                 CaretBrush="LightGray"
+                                 BorderBrush="Black"
+                                 BorderThickness="0,0,0,2"
+                                 Height="28"
+                                 VerticalContentAlignment="Center"
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
                     </StackPanel>
 
-                    <StackPanel Margin="10" Width="300" HorizontalAlignment="Center">
+                    <StackPanel Margin="10" Width="350" HorizontalAlignment="Center">
                         <!-- Cognome -->
                         <TextBlock Text="Cognome"
                                    HorizontalAlignment="Center"
@@ -151,7 +177,8 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
 
                         <!-- Civico -->
                         <TextBlock Text="Civico"
@@ -172,7 +199,8 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
 
                         <!-- Provincia -->
                         <TextBlock Text="Provincia"
@@ -193,38 +221,65 @@
                                  BorderThickness="0,0,0,2"
                                  Height="28"
                                  VerticalContentAlignment="Center"
-                                 Margin="10"/>
-                        <Button x:Name="btnRegister"                          
+                                 Margin="10"
+                                 HorizontalAlignment="Stretch"/>
+
+                        <!-- Password -->
+                        <TextBlock Text="Password"
+                                   HorizontalAlignment="Center"
+                                   Foreground="Black"
+                                   FontSize="14"
+                                   FontWeight="Medium"
+                                   FontFamily="Montserrat"                             
+                                   Margin="10"/>
+
+                        <PasswordBox x:Name="txtPassword"
+                                     FontSize="13"
+                                     FontWeight="Medium"
+                                     FontFamily="Montserrat"                            
+                                     Foreground="Black"
+                                     BorderBrush="Black"
+                                     BorderThickness="0,0,0,2"
+                                     Height="28"
+                                     VerticalContentAlignment="Center"
+                                     Margin="10"
+                                     HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </WrapPanel>
+
+                <Button x:Name="btnRegister"                          
                         BorderThickness="0"
                         Content="Registrati"
                         Foreground="White"
                         FontSize="14"
                         FontFamily="Montserrat"
                         Cursor="Hand"
-                        Click="btnRegister_Click" Width="155" Height="83" RenderTransformOrigin="-0.76,0.553">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="Background" Value="#462AD8"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#28AEED"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <Button.Template>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Width="150" Height="40"
+                        Click="btnRegister_Click"
+                        Width="155" Height="40"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#462AD8"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="150" Height="40"
                                     CornerRadius="20"
                                     Background="{TemplateBinding Background}">
-                                        <ContentPresenter VerticalAlignment="Center" 
-                                                   HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
-                </WrapPanel>
+                                <ContentPresenter VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </DockPanel>
         </DockPanel>
     </DockPanel>
