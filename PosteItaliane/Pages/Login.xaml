@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Login">
 
-    <Grid>
+    <Border>
         
         <Border CornerRadius="10"
         BorderThickness="2"
@@ -177,5 +177,5 @@
                        MouseDown="TextBlock_Registrati_MouseDown"/>
             </Grid>
         </Border>
-    </Grid>
+    </Border>
 </Page>

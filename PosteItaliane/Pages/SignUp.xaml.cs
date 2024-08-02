@@ -29,5 +29,14 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new Login());
         }
+
+        private void txtCF_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
