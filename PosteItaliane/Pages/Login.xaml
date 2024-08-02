@@ -56,12 +56,13 @@
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
                     <TextBlock Text="Username"
-                       Foreground="Black"
-                       FontSize="12"
-                       FontWeight="Medium"
-                       FontFamily="Montserrat"                             
-                       Margin="0,35,0,0"
-                       Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                               HorizontalAlignment="Center"
+                               Foreground="Black"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"                             
+                               Margin="0,35,0,0"
+                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
 
                     <TextBox x:Name="txtUser"
                      FontSize="13"
@@ -84,12 +85,13 @@
                     </TextBox>
 
                     <TextBlock Text="Password"
-                       Foreground="Black"
-                       FontSize="12"
-                       FontWeight="Medium"
-                       FontFamily="Montserrat"                             
-                       Margin="0,15,0,75"
-                       Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+                               Foreground="Black"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"                             
+                               Margin="0,15,0,75"
+                               Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                               HorizontalAlignment="Center"/>
 
                     <PasswordBox x:Name="txtPass"
                      FontSize="13"
@@ -158,7 +160,7 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
                        Foreground="Black"
-                       FontSize="10"
+                       FontSize="14"
                        FontWeight="Medium"
                        FontFamily="Montserrat"
                        Margin="0,315,0,0"
@@ -168,7 +170,7 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
                        Foreground="Blue"
-                       FontSize="10"
+                       FontSize="14"
                        FontWeight="Medium"
                        FontFamily="Montserrat"
                        Cursor="Hand"
