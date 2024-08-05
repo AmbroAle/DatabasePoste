@@ -62,7 +62,7 @@ namespace PosteItaliane
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
-                    MessageBox.Show("Connessione riuscita!");
+                    MessageBox.Show("Connessione riuscita,molto bene!");
                 }
             }
             catch (MySqlException ex)
