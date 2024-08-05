@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,24 @@ namespace PosteItaliane.Pages
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            ConnectDatabase();
+        }
+
+        private void ConnectDatabase()
+        {
+            try
+            {
+                string connStr = "server=localhost;uid=root;pwd=8323;database=Poste";
+                using (MySqlConnection conn = new MySqlConnection(connStr))
+                {
+                    conn.Open();
+                    MessageBox.Show("Connessione riuscita,molto bene!");
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Errore di connessione: " + ex.Message);
+            }
         }
     }
 }
