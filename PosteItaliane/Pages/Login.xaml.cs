@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 
 namespace PosteItaliane.Pages
 {
@@ -33,24 +35,50 @@ namespace PosteItaliane.Pages
         }
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            ConnectDatabase();
-        }
 
-        private void ConnectDatabase()
+            string email = txtUser.Text;
+            string password = txtPass.Password;
+            if (ConnectDatabase(email, password))
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavigateToPage(new Home());
+            }
+            else
+            {
+                MessageBox.Show("Email o password errati");
+            }
+
+        }
+        private bool ConnectDatabase(string email, string password)
         {
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=8323;database=Poste";
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string query = "SELECT Password FROM ACCOUNT WHERE Email = @Email";
+
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
-                    MessageBox.Show("Connessione riuscita,molto bene!");
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Email", email);
+
+                    string storedPassword = cmd.ExecuteScalar() as string;
+
+                    if (storedPassword != null && storedPassword == password)
+                    {
+                        return true;
+                    }
                 }
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show("Errore di connessione: " + ex.Message);
             }
+            return false;
+
         }
+
+
+
     }
 }
