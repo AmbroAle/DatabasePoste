@@ -57,7 +57,7 @@ namespace PosteItaliane.Pages
             }
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
                 string query = "SELECT Password FROM ACCOUNT WHERE Email = @Email";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))

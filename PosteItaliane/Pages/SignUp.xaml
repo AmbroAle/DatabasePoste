@@ -46,7 +46,6 @@
             <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <StackPanel Margin="10" Width="350" HorizontalAlignment="Center">
-                        <!-- Codice Fiscale -->
                         <TextBlock Text="Codice Fiscale"
                                    HorizontalAlignment="Center"
                                    Foreground="Black"
