@@ -62,7 +62,8 @@ namespace PosteItaliane.Pages
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Email", email);
 
-                    string storedPassword = cmd.ExecuteScalar() as string;
+                    object result = cmd.ExecuteScalar();
+                    string storedPassword = result as string ?? string.Empty;
 
                     if (storedPassword != null && storedPassword == password)
                     {
