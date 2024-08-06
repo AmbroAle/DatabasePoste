@@ -51,6 +51,10 @@ namespace PosteItaliane.Pages
         }
         private bool ConnectDatabase(string email, string password)
         {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                return false;
+            }
             try
             {
                 string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
