@@ -9,6 +9,54 @@
       Title="Home">
 
     <Grid>
-        
+        <!-- Definizione delle righe e delle colonne -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Immagine BancoPosta -->
+        <Image Grid.Row="0" Grid.Column="0" Source="/Images/BancoPosta.png" Stretch="Uniform" Margin="20"/>
+
+        <!-- Immagine Evolution -->
+        <Image Grid.Row="0" Grid.Column="1" Source="/Images/evolution.png" Stretch="Uniform" Margin="20"/>
+
+        <!-- Bottone Saldo -->
+        <Button x:Name="BancoSaldo"                          
+                Grid.Row="1" Grid.Column="0"
+                Width="140" Height="40"
+                BorderThickness="0"
+                Content="Saldo"
+                Foreground="White"
+                FontSize="14"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Margin="125,0,125,185"
+                Click="BancoSaldo_Click"
+                RenderTransformOrigin="0.5,0.5">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#462AD8"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="20"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 </Page>

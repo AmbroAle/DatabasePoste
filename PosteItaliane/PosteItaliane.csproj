@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\BancoPosta.png" />
+    <None Remove="Images\evolution.png" />
     <None Remove="Images\key-icon.png" />
     <None Remove="Images\Logo.png" />
     <None Remove="Images\user-icon.png" />
@@ -16,6 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\BancoPosta.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\evolution.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
