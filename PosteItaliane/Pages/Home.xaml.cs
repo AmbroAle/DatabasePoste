@@ -1,10 +1,13 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,11 +26,51 @@ namespace PosteItaliane.Pages
         public Home()
         {
             InitializeComponent();
+            LoadData();
         }
 
-        private void BancoSaldo_Click(object sender, RoutedEventArgs e)
+        private void LoadData()
         {
-            MessageBox.Show("ciao");
+            string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+            string query = "SELECT Saldo FROM CARTA WHERE CF = @CF";
+
+            string cfValue = "ABCDEF12G34H567I";
+            
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(connStr))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@CF", cfValue);
+
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            SaldoTextBlock.Text = result.ToString();
+                        }
+                        else
+                        {
+                            SaldoTextBlock.Text = "Nessun risultato trovato";
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Errore di connessione: " + ex.Message);
+            }
         }
+
+        private void BancoMovimenti_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new MovimentiBancoPosta());
+        }
+ 
+
+
     }
 }

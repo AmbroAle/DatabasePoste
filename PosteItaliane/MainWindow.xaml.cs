@@ -23,6 +23,8 @@ namespace PosteItaliane
             InitializeComponent();
             MainFrame.Navigate(new Pages.Login());
         }
+
+
         public void NavigateToPage(Page page)
         {
             MainFrame.Navigate(page);
