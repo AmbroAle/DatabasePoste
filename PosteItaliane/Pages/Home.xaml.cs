@@ -31,7 +31,7 @@ namespace PosteItaliane.Pages
 
         private void LoadData()
         {
-            string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
             string query = "SELECT Saldo FROM CARTA WHERE CF = @CF";
 
             string cfValue = UserSession.Instance.CF;
@@ -74,6 +74,12 @@ namespace PosteItaliane.Pages
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new Home());
+        }
+
+        private void btnPrenotazione_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new Prenotazione());
         }
 
     }

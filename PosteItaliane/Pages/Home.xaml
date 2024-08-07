@@ -163,11 +163,12 @@
                     </Button.Template>
                 </Button>
 
-                <Button Content="Button3" Width="140" Height="40" Margin="5"
+                <Button Content="Prenotazione" Width="140" Height="40" Margin="5"
                         Foreground="White"
                         FontSize="14"
                         FontFamily="Montserrat"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                    Click="btnPrenotazione_Click" RenderTransformOrigin="0.5,0.5">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#462AD8"/>
