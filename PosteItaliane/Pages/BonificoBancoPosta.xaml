@@ -168,7 +168,7 @@
                 <!-- Importo -->
                 <Grid Margin="0,5,0,0">
                     <TextBlock Text="Importo" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="13" Height="18" Margin="33,-4,0,0"/>
-                    <TextBox Name="ImportoTextBox"  
+                    <TextBox x:Name="txtImporto"  
                              FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
@@ -183,7 +183,8 @@
                 <!-- IBAN Destinatario -->
                 <Grid Margin="0,5">
                     <TextBlock Text="IBAN Destinatario" VerticalAlignment="Top" Margin="16,-1,0,0" HorizontalAlignment="Left" FontSize="13" Width="104"/>
-                    <TextBox Name="IbanTextBox" FontSize="13"
+                    <TextBox x:Name="txtIBAN" 
+                             FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
                              Foreground="Black"
@@ -197,7 +198,7 @@
                 <!-- Causale -->
                 <Grid Margin="0,5">
                     <TextBlock Text="Causale" VerticalAlignment="Top" Margin="0,-2,0,0" HorizontalAlignment="Center" FontSize="13" Width="52"/>
-                    <TextBox Name="CausaleTextBox" FontSize="13"
+                    <TextBox x:Name="txtCausale" FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"                            
                              Foreground="Black"
