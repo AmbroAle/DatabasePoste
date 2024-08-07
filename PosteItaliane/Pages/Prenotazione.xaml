@@ -12,7 +12,7 @@
         <Button x:Name="btnVisualizzaUffici"                          
                    BorderThickness="0"
                    Content="Visualizza uffici postali"
-                   Foreground="White"
+                   Foreground="Black"
                    FontSize="14"
                    FontFamily="Montserrat"
                    Cursor="Hand"
@@ -20,7 +20,7 @@
                    Click="btnVisualizzaUffici_Click" Grid.Column="0">
             <Button.Style>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8"/>
+                    <Setter Property="Background" Value="#EDF60E"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#28AEED"/>
@@ -43,7 +43,7 @@
         <Button x:Name="btnIndietro"                          
                    BorderThickness="0"
                    Content="Indietro"
-                   Foreground="White"
+                   Foreground="Black"
                    FontSize="14"
                    FontFamily="Montserrat"
                    Cursor="Hand"
@@ -52,7 +52,7 @@
                    Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
             <Button.Style>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8"/>
+                    <Setter Property="Background" Value="#EDF60E"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#28AEED"/>
@@ -75,7 +75,7 @@
         <Button x:Name="btnVisualizzaUfficiOperazione"                          
                  BorderThickness="0"
                  Content="Visualizza uffici postali in base all'operazione"
-                 Foreground="White"
+                 Foreground="Black"
                  FontSize="14"
                  FontFamily="Montserrat"
                  Cursor="Hand"
@@ -83,7 +83,7 @@
                  Click="btnVisualizzaUfficiOperazione_Click" Grid.Column="0">
             <Button.Style>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8"/>
+                    <Setter Property="Background" Value="#EDF60E"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#28AEED"/>

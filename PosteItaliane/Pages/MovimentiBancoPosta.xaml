@@ -22,7 +22,7 @@
                Width="140" Height="40"
                BorderThickness="0"
                Content="Indietro"
-               Foreground="White"
+               Foreground="Black"
                FontSize="14"
                FontFamily="Montserrat"
                Cursor="Hand"
@@ -31,7 +31,7 @@
                RenderTransformOrigin="0.5,0.5">
             <Button.Style>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8"/>
+                    <Setter Property="Background" Value="#EDF60E"/>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#28AEED"/>
