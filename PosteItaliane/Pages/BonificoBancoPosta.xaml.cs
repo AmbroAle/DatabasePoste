@@ -31,17 +31,33 @@ namespace PosteItaliane.Pages
         }
         private void btnBonifico_Click(object sender, RoutedEventArgs e)
         {
-            /*string iban = txtIBAN.Text;
+            string iban = txtIBAN.Text;
             string importo = txtImporto.Text;
             string causale = txtCausale.Text;
+            ComboBoxItem selectedItem = (ComboBoxItem)TipoBonificoComboBox.SelectedItem;
 
+            // Verifica se è stato selezionato un valore
+            if (selectedItem == null)
+            {
+                MessageBox.Show("Seleziona un tipo di bonifico.");
+                return;
+            }
+            //Controllo se tutti i campi sono stati compilati
             if (string.IsNullOrWhiteSpace(iban) || string.IsNullOrWhiteSpace(importo) || string.IsNullOrWhiteSpace(causale))
             {
-                MessageBox.Show("Compilare tutti i campi");
+                MessageBox.Show("Compilare tutti i campi.");
                 return;
             }
 
-            if (MakeBonifico(iban, importo, causale))
+            // Controllo se l'importo è un valore valido
+            if (!float.TryParse(importo, out float importoValue) || importoValue <= 0)
+            {
+                MessageBox.Show("L'importo deve essere un numero positivo.");
+                return;
+            }
+
+            // Chiamata al metodo MakeBonifico
+            if (MakeBonifico(iban, importoValue, causale))
             {
                 MessageBox.Show("Bonifico effettuato con successo!");
                 var mainWindow = Application.Current.MainWindow as MainWindow;
@@ -49,12 +65,12 @@ namespace PosteItaliane.Pages
             }
             else
             {
-                MessageBox.Show("Errore durante il bonifico");
-            }*/
-        }/*
-        private bool MakeBonifico(string iban,float importo, string causale)
+                MessageBox.Show("Errore durante il bonifico.");
+            }
+        }
+        private bool MakeBonifico(string iban, float importo, string causale)
         {
             return true;
-        }*/
+        }
     }
 }
