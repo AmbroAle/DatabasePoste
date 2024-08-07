@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EffettuaRecensione">
 
-    <Grid>
+    <Grid Margin="0,10,0,0">
         <Button x:Name="btnIndietro"                          
                   BorderThickness="0"
                   Content="Indietro"
@@ -38,6 +38,68 @@
                     </Border>
                 </ControlTemplate>
             </Button.Template>
+
         </Button>
+
+        <Button x:Name="btnEffettua"                          
+          BorderThickness="0"
+          Content="Effettua recensione"
+          Foreground="Black"
+          FontSize="14"
+          FontFamily="Montserrat"
+          Cursor="Hand"
+          Margin="0,129,0,-79"
+          Click="btnEffettuaRecensione_Click" Grid.Column="0">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="150" Height="40"
+                      CornerRadius="20"
+                      Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+
+        </Button>
+
+
+        <TextBox x:Name="txtIdUfficio" HorizontalAlignment="Center" Margin="0,32,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="326"/>
+        <TextBox x:Name="txtDescrizione" HorizontalAlignment="Center" Margin="0,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="326"/>
+        <TextBox x:Name="txtVoto" HorizontalAlignment="Center" Margin="0,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="325"/>
+
+        <!-- Definizione del DataGrid -->
+        <DataGrid x:Name="UfficiDataGrid"
+             AutoGenerateColumns="False"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Top"
+             Height="151"
+             Width="768" Margin="0,129,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn Header="Via" Binding="{Binding Ind_Via}" Width="*"/>
+                <DataGridTextColumn Header="Civico" Binding="{Binding Ind_Civico}" Width="*"/>
+                <DataGridTextColumn Header="Comune" Binding="{Binding Ind_Comune}" Width="*"/>
+                <DataGridTextColumn Header="Regione" Binding="{Binding Ind_Regione}" Width="*"/>
+                <DataGridTextColumn Header="Provincia" Binding="{Binding Ind_Provincia}" Width="*"/>
+                <DataGridTextColumn Header="Apertura" Binding="{Binding Apertura}" Width="*"/>
+                <DataGridTextColumn Header="Chiusura" Binding="{Binding Chiusura}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="181,34,0,0" TextWrapping="Wrap" Text="IdUfficio" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="165,57,0,0" TextWrapping="Wrap" Text="Descrizione" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="168,80,0,0" TextWrapping="Wrap" Text="Voto(1 a 5)" VerticalAlignment="Top"/>
+
+
     </Grid>
 </Page>
