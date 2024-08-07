@@ -8,105 +8,187 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home">
 
-    <Grid Margin="0,-1,0,0">
-        <!-- Definizione delle righe e delle colonne -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Border CornerRadius="10"
+            BorderThickness="2"
+            Opacity="0.95">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="GhostWhite" Offset="0"/>
+                <GradientStop Color="Blue" Offset="0.75"/>
+                <GradientStop Color="Yellow" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="White" Offset="0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <!-- Definizione delle righe e delle colonne -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <!-- Nuova riga per i bottoni in fondo -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <!-- Immagine BancoPosta -->
-        <Image Grid.Row="0" Grid.Column="0" Source="/Images/BancoPosta.png" Stretch="Uniform" Margin="20"/>
+            <!-- Immagine BancoPosta -->
+            <Image Grid.Row="0" Grid.Column="0" Source="/Images/BancoPosta.png" Stretch="Uniform" Margin="20"/>
 
-        <!-- Immagine Evolution -->
+            <!-- Bottone Movimenti -->
+            <Button x:Name="BancoMovimenti" Grid.Row="0" Grid.Column="1"
+                    Width="140" Height="40"
+                    BorderThickness="0"
+                    Content="Movimenti"
+                    Foreground="White"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Margin="10"
+                    Click="BancoMovimenti_Click"
+                    RenderTransformOrigin="0.5,0.5">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <!-- Bottone Saldo -->
-        <Button x:Name="BancoMovimenti" Grid.Column="1"
-                Width="140" Height="40"
-                BorderThickness="0"
-                Content="Movimenti"
-                Foreground="White"
-                FontSize="14"
-                FontFamily="Montserrat"
-                Cursor="Hand"
-                Margin="6,42,254,144"
-                Click="BancoMovimenti_Click"
-                RenderTransformOrigin="0.5,0.5">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20"
-                            Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <TextBlock x:Name="SaldoTextBlock"
+                       Text="Saldo"
+                       HorizontalAlignment="Center"
+                       Foreground="Black"
+                       FontSize="25"
+                       FontWeight="Medium"
+                       FontFamily="Montserrat"
+                       Margin="0,20,0,20" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <TextBlock x:Name="SaldoTextBlock"
-           Text="Saldo"
-           HorizontalAlignment="Left"
-           Foreground="Black"
-           FontSize="25"
-           FontWeight="Medium"
-           FontFamily="Montserrat"
-           Margin="207,172,0,20" Grid.Column="0"/>
+            <!-- Bottone Bonifico -->
+            <Button x:Name="btnBonifico" Grid.Row="1" Grid.Column="1"
+                    Width="150" Height="40"
+                    BorderThickness="0"
+                    Content="Bonifico"
+                    Foreground="White"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Margin="10"
+                    Click="btnBonifico_Click" RenderTransformOrigin="0.5,0.5">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <!-- Bottone bonifico -->
-        <Button x:Name="btnBonifico" Height="40"
-        
-            BorderThickness="0"
-            Content="Bonifico"
-            Foreground="White"
-            FontSize="14"
-            FontFamily="Montserrat"
-            Cursor="Hand"
-            Margin="2,119,248,66"
-            Click="btnBonifico_Click" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-0.386"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-0.525"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Width="150" Height="40"
-             CornerRadius="20"
-             Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center"
-                           HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <!-- Nuova riga per i bottoni in fondo -->
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Button1" Width="140" Height="40" Margin="5"
+                        Foreground="White"
+                        FontSize="14"
+                        FontFamily="Montserrat"
+                        Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#462AD8"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
+                <Button Content="Button2" Width="140" Height="40" Margin="5"
+                        Foreground="White"
+                        FontSize="14"
+                        FontFamily="Montserrat"
+                        Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#462AD8"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-    </Grid>
+                <Button Content="Button3" Width="140" Height="40" Margin="5"
+                        Foreground="White"
+                        FontSize="14"
+                        FontFamily="Montserrat"
+                        Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#462AD8"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <!-- Aggiungi altri bottoni se necessario -->
+            </StackPanel>
+
+        </Grid>
+    </Border>
 </Page>
