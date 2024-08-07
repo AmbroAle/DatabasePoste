@@ -34,7 +34,7 @@ namespace PosteItaliane.Pages
             string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
             string query = "SELECT Saldo FROM CARTA WHERE CF = @CF";
 
-            string cfValue = "ABCDEF12G34H567I";
+            string cfValue = UserSession.Instance.CF;
             
             try
             {
@@ -69,8 +69,12 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new MovimentiBancoPosta());
         }
- 
 
+        private void btnBonifico_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new BonificoBancoPosta());
+        }
 
     }
 }

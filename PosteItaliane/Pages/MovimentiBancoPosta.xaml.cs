@@ -33,7 +33,7 @@ namespace PosteItaliane.Pages
             try
             {
                 // La stringa di connessione al database MySQL
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
 
                 // Query con parametro per selezionare i movimenti
                 string query = @"
@@ -44,7 +44,7 @@ namespace PosteItaliane.Pages
                 TIPO_TRANSAZIONE.TipologiaPagamento,
                 TIPO_TRANSAZIONE.Ente,
                 TIPO_TRANSAZIONE.IbanDestinatario,
-                TIPO_TRANSAZIONE.Casuale,
+                TIPO_TRANSAZIONE.Causale,
                 TIPO_TRANSAZIONE.Id
             FROM
                 TRANSAZIONE
@@ -54,7 +54,7 @@ namespace PosteItaliane.Pages
                 TRANSAZIONE.NumeroIdentificativo = @NumeroIdentificativo";
 
                 // Numero identificativo della carta, sostituisci con il valore corretto
-                string numeroIdentificativoValue = "1234567890123456"; // Inserisci qui il numero identificativo corretto
+                string numeroIdentificativoValue = UserSession.Instance.NumeroIdentificativo; // Inserisci qui il numero identificativo corretto
 
                 // Creazione e apertura della connessione
                 using (MySqlConnection conn = new MySqlConnection(connStr))
@@ -64,7 +64,7 @@ namespace PosteItaliane.Pages
                     // Creazione del comando e aggiunta del parametro
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@NumeroIndentificativo", numeroIdentificativoValue);
+                        cmd.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativoValue);
 
                         // Esecuzione della query e recupero del risultato
                         using (MySqlDataReader reader = cmd.ExecuteReader())

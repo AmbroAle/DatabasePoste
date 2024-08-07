@@ -55,10 +55,12 @@ namespace PosteItaliane.Pages
             {
                 return false;
             }
+
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
-                string query = "SELECT Password FROM ACCOUNT WHERE Email = @Email";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string query = "SELECT Password, CF FROM ACCOUNT WHERE Email = @Email";
+                string quaryCarta = "SELECT NumeroIdentificativo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
@@ -66,12 +68,32 @@ namespace PosteItaliane.Pages
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Email", email);
 
-                    object result = cmd.ExecuteScalar();
-                    string storedPassword = result as string ?? string.Empty;
-
-                    if (storedPassword != null && storedPassword == password)
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        return true;
+                        if (reader.Read())
+                        {
+                            string storedPassword = reader.GetString("Password");
+                            string cf = reader.GetString("CF");
+
+                            if (storedPassword == password)
+                            {
+                                // Imposta il CF nella UserSession
+                                UserSession.Instance.CF = cf;
+                                reader.Close();
+                                //return true;
+                                MySqlCommand cmdCarta = new MySqlCommand(quaryCarta, conn);
+                                cmdCarta.Parameters.AddWithValue("@CF", cf);
+                                using(MySqlDataReader readerCarta = cmdCarta.ExecuteReader()) 
+                                {
+                                    if (readerCarta.Read()) 
+                                    {
+                                        string NumeroIdentificativo = readerCarta.GetString("NumeroIdentificativo");
+                                        UserSession.Instance.NumeroIdentificativo = NumeroIdentificativo;
+                                    }
+                                }
+                            }
+                            return true;
+                        }
                     }
                 }
             }
@@ -79,8 +101,8 @@ namespace PosteItaliane.Pages
             {
                 MessageBox.Show("Errore di connessione: " + ex.Message);
             }
-            return false;
 
+            return false;
         }
 
 

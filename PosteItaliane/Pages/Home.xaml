@@ -66,7 +66,47 @@
            FontFamily="Montserrat"
            Margin="207,172,0,20" Grid.Column="0"/>
 
-        <!-- Definizione del DataGrid -->
+        <!-- Bottone bonifico -->
+        <Button x:Name="btnBonifico" Height="40"
+        
+            BorderThickness="0"
+            Content="Bonifico"
+            Foreground="White"
+            FontSize="14"
+            FontFamily="Montserrat"
+            Cursor="Hand"
+            Margin="375,76,275,109"
+            Click="btnBonifico_Click" Grid.Column="0" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.386"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.525"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#462AD8"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="150" Height="40"
+             CornerRadius="20"
+             Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
 
     </Grid>
 </Page>
