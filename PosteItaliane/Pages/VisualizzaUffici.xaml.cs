@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -19,62 +19,56 @@ using System.Windows.Shapes;
 namespace PosteItaliane.Pages
 {
     /// <summary>
-    /// Logica di interazione per Home.xaml
+    /// Logica di interazione per VisualizzaUffici.xaml
     /// </summary>
-    public partial class Home : Page
+    public partial class VisualizzaUffici : Page
     {
-        public Home()
+        public VisualizzaUffici()
         {
             InitializeComponent();
             LoadData();
+
         }
 
-        private void LoadData()
+        private void LoadData() 
         {
-            string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
-            string query = "SELECT Saldo FROM CARTA WHERE CF = @CF";
-
-            string cfValue = UserSession.Instance.CF;
-            
-            try
+            try 
             {
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string query = "SELECT * FROM UFFICIO POSTALE";
+
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
+
+                    // Creazione del comando e aggiunta del parametro
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@CF", cfValue);
 
-                        object result = cmd.ExecuteScalar();
+                        // Esecuzione della query e recupero del risultato
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
 
-                        if (result != null)
-                        {
-                            SaldoTextBlock.Text = result.ToString();
-                        }
-                        else
-                        {
-                            SaldoTextBlock.Text = "Nessun risultato trovato";
+                            // Assuming you have a DataGrid or similar control to display the results
+                            UfficiDataGrid.ItemsSource = dataTable.DefaultView;
+
                         }
                     }
                 }
             }
             catch (MySqlException ex)
             {
+                // Gestione degli errori di connessione e SQL
                 MessageBox.Show("Errore di connessione: " + ex.Message);
             }
         }
-
-        private void BancoMovimenti_Click(object sender, RoutedEventArgs e)
+            
+        private void btnIndietro_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.NavigateToPage(new MovimentiBancoPosta());
+            mainWindow?.NavigateToPage(new Prenotazione());
         }
-
-        private void btnBonifico_Click(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.NavigateToPage(new Home());
-        }
-
     }
 }
