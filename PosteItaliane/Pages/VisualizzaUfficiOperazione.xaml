@@ -9,137 +9,152 @@
       Title="VisualizzaUfficiOperazione">
 
     <Grid>
-        <Button Content="Bollettino" Width="140" Height="40" Margin="10,24,650,386"
-                      Foreground="Black"
-                      FontSize="14"
-                      FontFamily="Montserrat"
-                      Cursor="Hand"
-                      Click="btnBollettino_Click" RenderTransformOrigin="0.5,0.5">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Yellow"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+        <!-- Definizione delle righe per il layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Righe per i pulsanti in alto -->
+            <RowDefinition Height="*"/>
+            <!-- Righe per il DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Righe per il pulsante Indietro -->
+        </Grid.RowDefinitions>
 
-        <Button Content="Posta e pacchi" Width="140" Height="40" Margin="166,24,494,386"
-                      Foreground="Black"
-                      FontSize="14"
-                      FontFamily="Montserrat"
-                      Cursor="Hand"
-                      Click="btnPostaPacchi_Click" RenderTransformOrigin="0.5,0.5">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Yellow"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+        <!-- Utilizzo di un WrapPanel per posizionare i pulsanti in alto -->
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Bollettino" Width="140" Height="40" Margin="5"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btnBollettino_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <Button Content="Versamenti e altri pagamenti" Width="200" Height="40" Margin="322,24,278,386"
-                      Foreground="Black"
-                      FontSize="14"
-                      FontFamily="Montserrat"
-                      Cursor="Hand"
-                      Click="btnVersamentiAltro_Click" RenderTransformOrigin="0.5,0.5">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Yellow"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <Button Content="Posta e pacchi" Width="140" Height="40" Margin="5"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btnPostaPacchi_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <Button Content="SPID" Width="100" Height="40" Margin="547,24,153,386"
-                      Foreground="Black"
-                      FontSize="14"
-                      FontFamily="Montserrat"
-                      Cursor="Hand"
-                      Click="btnSPID_Click" RenderTransformOrigin="0.5,0.5">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Yellow"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <Button Content="Versamenti e altri pagamenti" Width="200" Height="40" Margin="5"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btnVersamentiAltro_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-        <Button Content="Altro" Width="100" Height="40" Margin="671,24,29,386"
-                      Foreground="Black"
-                      FontSize="14"
-                      FontFamily="Montserrat"
-                      Cursor="Hand"
-                      Click="btnAltro_Click" RenderTransformOrigin="0.5,0.5">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Yellow"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            <Button Content="SPID" Width="100" Height="40" Margin="5"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btnSPID_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
+            <Button Content="Altro" Width="100" Height="40" Margin="5"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btnAltro_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Yellow"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </WrapPanel>
+
+        <!-- DataGrid al centro della pagina -->
         <DataGrid x:Name="UfficiDataGrid"
-             AutoGenerateColumns="False"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center"
-             Height="238"
-             Width="780">
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Height="238"
+                  Width="780">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
                 <DataGridTextColumn Header="Via" Binding="{Binding Ind_Via}" Width="*"/>
@@ -151,12 +166,15 @@
                 <DataGridTextColumn Header="Chiusura" Binding="{Binding Chiusura}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Indietro" Width="140" Height="40" Margin="322,400,338,10"
-                      Foreground="Black"
-                      FontSize="14"
-                      FontFamily="Montserrat"
-                      Cursor="Hand"
-                      Click="btnIndietro_Click" RenderTransformOrigin="0.5,0.5">
+
+        <!-- Pulsante "Indietro" in basso -->
+        <Button Content="Indietro" Width="140" Height="40" Margin="10"
+                Foreground="Black"
+                FontSize="14"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Grid.Row="2"
+                Click="btnIndietro_Click">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="Yellow"/>
