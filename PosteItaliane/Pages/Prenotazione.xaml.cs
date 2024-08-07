@@ -34,7 +34,7 @@ namespace PosteItaliane.Pages
         private void btnVisualizzaUfficiOperazione_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.NavigateToPage(new Home());
+            mainWindow?.NavigateToPage(new VisualizzaUfficiOperazione());
         }
 
         private void btnVisualizzaUffici_Click(object sender, RoutedEventArgs e)
