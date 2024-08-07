@@ -246,7 +246,6 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new Prenotazione());
         }
-           
     }
 }
 
