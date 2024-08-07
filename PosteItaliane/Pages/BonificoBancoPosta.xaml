@@ -16,7 +16,6 @@
                     <ControlTemplate TargetType="ComboBox">
                         <Grid>
                             <ToggleButton x:Name="ToggleButton"
-                                          
                                           Background="{TemplateBinding Background}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           BorderThickness="{TemplateBinding BorderThickness}"
@@ -113,77 +112,101 @@
         </ControlTemplate>
     </Page.Resources>
 
-    <Border CornerRadius="10"
-            BorderThickness="2"
-            Opacity="0.95">
-        <Border.BorderBrush>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="GhostWhite" Offset="0"/>
-                <GradientStop Color="Blue" Offset="0.75"/>
-                <GradientStop Color="Yellow" Offset="1"/>
-            </LinearGradientBrush>
-        </Border.BorderBrush>
-        <Border.Background>
-            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                <GradientStop Color="White" Offset="0"/>
-            </LinearGradientBrush>
-        </Border.Background>
-        <StackPanel Margin="10,24,10,-4" Orientation="Vertical">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <Button x:Name="Back"                          
-                    BorderThickness="0"
-                    Panel.ZIndex="1" 
-                    Content="Torna Indietro"
-                    Foreground="Black"
-                    FontSize="14"
-                    FontFamily="Montserrat"
-                    Cursor="Hand"
-                    Margin="10"
-                    Click="btnBack_Click"
-                    DockPanel.Dock="Top"
-                    HorizontalAlignment="Left">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#EDF60E"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#28AEED"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="150" Height="40"
-                                CornerRadius="20"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <TextBlock Text="Gestione Bonifico" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
+        <!-- Bottone "Torna Indietro" posizionato nella parte superiore -->
+        <Button x:Name="Back"                          
+                BorderThickness="0"
+                Panel.ZIndex="1" 
+                Content="Torna Indietro"
+                Foreground="Black"
+                FontSize="14"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Margin="10"
+                Click="btnBack_Click"
+                HorizontalAlignment="Left"
+                Grid.Row="0">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="150" Height="40"
+                            CornerRadius="20"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <!-- Contenuto centrato nella parte rimanente della pagina -->
+        <StackPanel Margin="10,24,10,10" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+            <TextBlock Text="Gestione Bonifico" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
 
             <ComboBox x:Name="TipoBonificoComboBox" Width="200" Margin="0,0,0,20" Style="{StaticResource ModernComboBox}">
                 <ComboBoxItem Content="Bonifico Istantaneo" Style="{StaticResource ModernComboBoxItem}" />
                 <ComboBoxItem Content="Bonifico Standard" Style="{StaticResource ModernComboBoxItem}" />
             </ComboBox>
 
-            <TextBlock Text="Dettagli Bonifico" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,5" />
+            <TextBlock Text="Dettagli Bonifico" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,0,20">
-                <Grid Margin="0,5">
-                    <TextBox Name="ImportoTextBox" Width="200" VerticalAlignment="Center"/>
-                    <TextBlock Text="Importo" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,20" HorizontalAlignment="Center">
+                <!-- Importo -->
+                <Grid Margin="0,5,0,0">
+                    <TextBlock Text="Importo" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="13" Height="18" Margin="33,-4,0,0"/>
+                    <TextBox Name="ImportoTextBox"  
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Black"
+                             BorderThickness="0,0,0,2"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="-50,15,-50,0" Grid.Column="0"/>
                 </Grid>
+                <!-- IBAN Destinatario -->
                 <Grid Margin="0,5">
-                    <TextBox Name="IbanTextBox" Width="200" VerticalAlignment="Center"/>
-                    <TextBlock Text="IBAN Destinatario" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <TextBlock Text="IBAN Destinatario" VerticalAlignment="Top" Margin="16,-1,0,0" HorizontalAlignment="Left" FontSize="13" Width="104"/>
+                    <TextBox Name="IbanTextBox" FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Black"
+                             BorderThickness="0,0,0,2"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="-50,15,-50,0" Grid.Column="0"/>
                 </Grid>
+                <!-- Causale -->
                 <Grid Margin="0,5">
-                    <TextBox Name="CausaleTextBox" Width="200" VerticalAlignment="Center"/>
-                    <TextBlock Text="Causale" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <TextBlock Text="Causale" VerticalAlignment="Top" Margin="0,-2,0,0" HorizontalAlignment="Center" FontSize="13" Width="52"/>
+                    <TextBox Name="CausaleTextBox" FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Black"
+                             BorderThickness="0,0,0,2"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="-50,15,-50,0" Grid.Column="0"/>
                 </Grid>
             </StackPanel>
 
@@ -196,8 +219,8 @@
                     Cursor="Hand"
                     Margin="10"
                     Click="btnBonifico_Click"
-                    DockPanel.Dock="Top"
-                    HorizontalAlignment="Left">
+                    HorizontalAlignment="Center">
+                <!-- Centra il bottone -->
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#EDF60E"/>
@@ -220,5 +243,5 @@
                 </Button.Template>
             </Button>
         </StackPanel>
-    </Border>
+    </Grid>
 </Page>
