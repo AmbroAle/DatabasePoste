@@ -1,0 +1,224 @@
+﻿<Page x:Class="PosteItaliane.Pages.BonificoBancoPosta"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PosteItaliane.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BonificoBancoPosta">
+
+    <Page.Resources>
+        <!-- Style per la ComboBox -->
+        <Style TargetType="ComboBox" x:Key="ModernComboBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                          
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Focusable="False"
+                                          IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" 
+                                          HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch"/>
+                            <ContentPresenter x:Name="ContentSite"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              Margin="3,3,23,3" />
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Grid MaxHeight="200" MinWidth="{TemplateBinding ActualWidth}">
+                                    <Border x:Name="DropDownBorder"
+                                            Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                                            BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
+                                            BorderThickness="1" />
+                                    <ScrollViewer Margin="4" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ToggleButton" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ToggleButton" Property="Background" Value="LightBlue"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="ToggleButton" Property="BorderBrush" Value="Blue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="10,3"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
+
+        <!-- Style per gli elementi della ComboBox -->
+        <Style TargetType="ComboBoxItem" x:Key="ModernComboBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="Border"
+                                Padding="10"
+                                Background="White">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#28AEED"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#28AEED"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
+        <!-- Template per il ToggleButton della ComboBox -->
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+            <Border x:Name="Border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="1">
+                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  ContentTemplate="{TemplateBinding Template}"
+                                  Content="{TemplateBinding Content}"/>
+            </Border>
+        </ControlTemplate>
+    </Page.Resources>
+
+    <Border CornerRadius="10"
+            BorderThickness="2"
+            Opacity="0.95">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="GhostWhite" Offset="0"/>
+                <GradientStop Color="Blue" Offset="0.75"/>
+                <GradientStop Color="Yellow" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="White" Offset="0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <StackPanel Margin="10,24,10,-4" Orientation="Vertical">
+
+            <Button x:Name="Back"                          
+                    BorderThickness="0"
+                    Panel.ZIndex="1" 
+                    Content="Torna Indietro"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Margin="10"
+                    Click="btnBack_Click"
+                    DockPanel.Dock="Top"
+                    HorizontalAlignment="Left">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#EDF60E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <TextBlock Text="Gestione Bonifico" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
+
+            <ComboBox x:Name="TipoBonificoComboBox" Width="200" Margin="0,0,0,20" Style="{StaticResource ModernComboBox}">
+                <ComboBoxItem Content="Bonifico Istantaneo" Style="{StaticResource ModernComboBoxItem}" />
+                <ComboBoxItem Content="Bonifico Standard" Style="{StaticResource ModernComboBoxItem}" />
+            </ComboBox>
+
+            <TextBlock Text="Dettagli Bonifico" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,5" />
+
+            <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+                <Grid Margin="0,5">
+                    <TextBox Name="ImportoTextBox" Width="200" VerticalAlignment="Center"/>
+                    <TextBlock Text="Importo" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid Margin="0,5">
+                    <TextBox Name="IbanTextBox" Width="200" VerticalAlignment="Center"/>
+                    <TextBlock Text="IBAN Destinatario" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid Margin="0,5">
+                    <TextBox Name="CausaleTextBox" Width="200" VerticalAlignment="Center"/>
+                    <TextBlock Text="Causale" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+            </StackPanel>
+
+            <Button Content="Esegui Bonifico"         
+                    BorderThickness="0"
+                    Panel.ZIndex="1" 
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Margin="10"
+                    Click="btnBonifico_Click"
+                    DockPanel.Dock="Top"
+                    HorizontalAlignment="Left">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#EDF60E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+    </Border>
+</Page>

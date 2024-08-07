@@ -58,7 +58,7 @@ namespace PosteItaliane.Pages
 
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
                 string query = "SELECT Password, CF FROM ACCOUNT WHERE Email = @Email";
                 string quaryCarta = "SELECT NumeroIdentificativo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
 
@@ -83,9 +83,9 @@ namespace PosteItaliane.Pages
                                 //return true;
                                 MySqlCommand cmdCarta = new MySqlCommand(quaryCarta, conn);
                                 cmdCarta.Parameters.AddWithValue("@CF", cf);
-                                using(MySqlDataReader readerCarta = cmdCarta.ExecuteReader()) 
+                                using (MySqlDataReader readerCarta = cmdCarta.ExecuteReader())
                                 {
-                                    if (readerCarta.Read()) 
+                                    if (readerCarta.Read())
                                     {
                                         string NumeroIdentificativo = readerCarta.GetString("NumeroIdentificativo");
                                         UserSession.Instance.NumeroIdentificativo = NumeroIdentificativo;
