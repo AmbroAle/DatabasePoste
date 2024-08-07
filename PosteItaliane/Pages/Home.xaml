@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home">
 
-    <Grid>
+    <Grid Margin="0,-1,0,0">
         <!-- Definizione delle righe e delle colonne -->
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -25,7 +25,7 @@
         <!-- Immagine Evolution -->
 
         <!-- Bottone Saldo -->
-        <Button x:Name="BancoMovimenti" Grid.Column="0"
+        <Button x:Name="BancoMovimenti" Grid.Column="1"
                 Width="140" Height="40"
                 BorderThickness="0"
                 Content="Movimenti"
@@ -33,9 +33,9 @@
                 FontSize="14"
                 FontFamily="Montserrat"
                 Cursor="Hand"
-                Margin="382,20,278,165"
+                Margin="6,42,254,144"
                 Click="BancoMovimenti_Click"
-                RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                RenderTransformOrigin="0.5,0.5">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#462AD8"/>
@@ -75,8 +75,8 @@
             FontSize="14"
             FontFamily="Montserrat"
             Cursor="Hand"
-            Margin="375,76,275,109"
-            Click="btnBonifico_Click" Grid.Column="0" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.5">
+            Margin="2,119,248,66"
+            Click="btnBonifico_Click" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

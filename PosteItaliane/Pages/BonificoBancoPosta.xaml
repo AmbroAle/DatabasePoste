@@ -8,7 +8,34 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BonificoBancoPosta">
 
-    <Grid>
-        
-    </Grid>
+    <Border BorderBrush="Black" BorderThickness="1" Margin="10">
+        <StackPanel Margin="10" Orientation="Vertical">
+            <TextBlock Text="Gestione Bonifico" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
+
+            <ComboBox x:Name="TipoBonificoComboBox" Width="200" Margin="0,0,0,20">
+                <ComboBoxItem Content="Bonifico Istantaneo" />
+                <ComboBoxItem Content="Bonifico Standard" />
+            </ComboBox>
+
+            <TextBlock Text="Dettagli Bonifico" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,5" />
+
+            <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+                <Grid Margin="0,5">
+                    <TextBox Name="ImportoTextBox" Width="200" VerticalAlignment="Center"/>
+                    <TextBlock Text="Importo" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid Margin="0,5">
+                    <TextBox Name="IbanTextBox" Width="200" VerticalAlignment="Center"/>
+                    <TextBlock Text="IBAN Destinatario" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid Margin="0,5">
+                    <TextBox Name="CausaleTextBox" Width="200" VerticalAlignment="Center"/>
+                    <TextBlock Text="Causale" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+            </StackPanel>
+
+
+            <Button Content="Esegui Bonifico" Width="200" HorizontalAlignment="Left" />
+        </StackPanel>
+    </Border>
 </Page>
