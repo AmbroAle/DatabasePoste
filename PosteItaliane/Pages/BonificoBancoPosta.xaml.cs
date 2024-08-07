@@ -24,5 +24,37 @@ namespace PosteItaliane.Pages
         {
             InitializeComponent();
         }
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new Home());
+        }
+        private void btnBonifico_Click(object sender, RoutedEventArgs e)
+        {
+            /*string iban = txtIBAN.Text;
+            string importo = txtImporto.Text;
+            string causale = txtCausale.Text;
+
+            if (string.IsNullOrWhiteSpace(iban) || string.IsNullOrWhiteSpace(importo) || string.IsNullOrWhiteSpace(causale))
+            {
+                MessageBox.Show("Compilare tutti i campi");
+                return;
+            }
+
+            if (MakeBonifico(iban, importo, causale))
+            {
+                MessageBox.Show("Bonifico effettuato con successo!");
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                mainWindow?.NavigateToPage(new Home());
+            }
+            else
+            {
+                MessageBox.Show("Errore durante il bonifico");
+            }*/
+        }/*
+        private bool MakeBonifico(string iban,float importo, string causale)
+        {
+            return true;
+        }*/
     }
 }
