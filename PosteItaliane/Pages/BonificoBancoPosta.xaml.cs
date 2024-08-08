@@ -74,7 +74,7 @@ namespace PosteItaliane.Pages
             float commissione = (tipoBonifico == "Istantaneo") ? 1.5f : 1f;
             string ente = "Poste Italiane";
             string tipologiaPagamento = "online";
-            //string NumeroIdentificativo = GetNumeroIdentificativo();
+            string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
             string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -105,7 +105,8 @@ namespace PosteItaliane.Pages
                     }
 
                     // Seconda query: Inserire nella tabella TIPO_TRANSAZIONE
-                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale,Ente,Commissione,TipologiaPagamento) VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale,@Ente,@Commissione,@TipologiaPagamento)";
+                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale,Ente,Commissione,TipologiaPagamento,NumeroIdentificativo) " +
+                        "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale,@Ente,@Commissione,@TipologiaPagamento,@NumeroIdentificativo)";
                     using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
                     {
                         commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // Usa lo stesso CodTransazione
@@ -115,6 +116,7 @@ namespace PosteItaliane.Pages
                         commandTipoTransazione.Parameters.AddWithValue("@Ente", ente);
                         commandTipoTransazione.Parameters.AddWithValue("@Commissione", commissione);
                         commandTipoTransazione.Parameters.AddWithValue("@TipologiaPagamento", tipologiaPagamento);
+                        commandTipoTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
 
                         commandTipoTransazione.ExecuteNonQuery();
                         Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
@@ -133,17 +135,6 @@ namespace PosteItaliane.Pages
                     MessageBox.Show($"Errore durante l'esecuzione della transazione: {ex.Message}", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
-            }
-        }
-        private string GetNumeroIdentificativo(MySqlConnection connection)
-        {
-            string query = "SELECT NumeroIdentificativo FROM Utenti WHERE Id = @UserId"; // Sostituisci @UserId con l'id dell'utente corrente
-            using (MySqlCommand command = new MySqlCommand(query, connection))
-            {
-                //command.Parameters.AddWithValue("@UserId",); // Assicurati di implementare GetCurrentUserId per ottenere l'id dell'utente corrente
-
-                object result = command.ExecuteScalar();
-                return result?.ToString();
             }
         }
     }

@@ -10,17 +10,17 @@ namespace PosteItaliane
     {
         private static UserSession? _instance;
 
-        // La proprietà che contiene il valore del CF
         public string CF { get; set; }
         public string NumeroIdentificativo { get; set; }
-        // Costruttore privato per impedire la creazione diretta di istanze
+        public int UserId { get; set; }
+
         private UserSession()
         {
             this.CF = "prova";
             this.NumeroIdentificativo = "";
+            this.UserId = -1;
         }
 
-        // Metodo per ottenere l'istanza unica del singleton
         public static UserSession Instance
         {
             get
@@ -33,5 +33,6 @@ namespace PosteItaliane
             }
         }
     }
+
 
 }
