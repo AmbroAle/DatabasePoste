@@ -74,12 +74,12 @@
 
             <TextBlock x:Name="SaldoTextBlock"
                        Text="Saldo"
-                       HorizontalAlignment="Center"
+                       HorizontalAlignment="Left"
                        Foreground="Black"
                        FontSize="25"
                        FontWeight="Medium"
                        FontFamily="Montserrat"
-                       Margin="0,20,0,20" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                       Margin="365,80,0,148" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
             <!-- Bottone Bonifico -->
             <Button x:Name="btnBonifico" Grid.Row="1" Grid.Column="1"
@@ -115,11 +115,12 @@
 
             <!-- Nuova riga per i bottoni in fondo -->
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Button1" Width="140" Height="40" Margin="5"
+                <Button Content="Ricarica" Width="140" Height="40" Margin="5"
                         Foreground="Black"
                         FontSize="14"
                         FontFamily="Montserrat"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        Click="btnRicarica_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#EDF60E"/>

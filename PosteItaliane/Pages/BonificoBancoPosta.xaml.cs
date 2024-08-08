@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,7 +58,7 @@ namespace PosteItaliane.Pages
             }
 
             // Chiamata al metodo MakeBonifico
-            if (MakeBonifico(iban, importoValue, causale))
+            if (MakeBonifico(iban, importoValue, causale, selectedItem.Content.ToString() ?? "Default"))
             {
                 MessageBox.Show("Bonifico effettuato con successo!");
                 var mainWindow = Application.Current.MainWindow as MainWindow;
@@ -68,9 +69,101 @@ namespace PosteItaliane.Pages
                 MessageBox.Show("Errore durante il bonifico.");
             }
         }
-        private bool MakeBonifico(string iban, float importo, string causale)
+        private bool MakeBonifico(string iban, float importo, string causale, string tipoBonifico)
         {
-            return true;
+            float commissione = (tipoBonifico == "Bonifico Istantaneo") ? 1f : 0;
+            string ente = "Poste Italiane";
+            string tipologiaPagamento = "online";
+            string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
+            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                MySqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Messaggio di debug: Connessione e transazione iniziate
+                    Console.WriteLine("Connessione aperta e transazione iniziata.");
+
+                    // Genera un GUID per CodTransazione, da usare in entrambe le query
+                    string codTransazione = Guid.NewGuid().ToString();
+
+                    // Verifica se il conto/carta ha abbastanza saldo
+                    string checkSaldoQuery = "SELECT Saldo FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
+                    float saldo;
+                    using (MySqlCommand checkSaldoCommand = new MySqlCommand(checkSaldoQuery, connection, transaction))
+                    {
+                        checkSaldoCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+                        saldo = Convert.ToSingle(checkSaldoCommand.ExecuteScalar());
+                    }
+
+                    if (saldo < importo + commissione)
+                    {
+                        MessageBox.Show("Saldo insufficiente per effettuare il bonifico.");
+                        return false;
+                    }
+
+                    // Prima query: Inserire nella tabella TRANSAZIONE
+                    string queryTransazione = "INSERT INTO TRANSAZIONE (CodTransazione, Importo, Data, NumeroIdentificativo) VALUES (@CodTransazione, @Importo, @Data, @NumeroIdentificativo)";
+                    using (MySqlCommand commandTransazione = new MySqlCommand(queryTransazione, connection, transaction))
+                    {
+                        commandTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
+                        commandTransazione.Parameters.AddWithValue("@Importo", importo);
+                        commandTransazione.Parameters.AddWithValue("@Data", DateTime.Now);
+                        commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                        commandTransazione.ExecuteNonQuery();
+                        Console.WriteLine("Query TRANSAZIONE eseguita con successo.");
+                    }
+
+                    // Seconda query: Inserire nella tabella TIPO_TRANSAZIONE
+                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale, Ente, Commissione, TipologiaPagamento, NumeroIdentificativo) " +
+                        "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale, @Ente, @Commissione, @TipologiaPagamento, @NumeroIdentificativo)";
+                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
+                    {
+                        commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // Usa lo stesso CodTransazione
+                        commandTipoTransazione.Parameters.AddWithValue("@Tipo", tipoBonifico); // Utilizza il parametro tipoBonifico
+                        commandTipoTransazione.Parameters.AddWithValue("@IbanDestinatario", iban);
+                        commandTipoTransazione.Parameters.AddWithValue("@Causale", causale);
+                        commandTipoTransazione.Parameters.AddWithValue("@Ente", ente);
+                        commandTipoTransazione.Parameters.AddWithValue("@Commissione", commissione);
+                        commandTipoTransazione.Parameters.AddWithValue("@TipologiaPagamento", tipologiaPagamento);
+                        commandTipoTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                        commandTipoTransazione.ExecuteNonQuery();
+                        Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
+                    }
+
+                    // Terza query: Aggiornare il saldo della carta/conto
+                    string updateSaldoQuery = "UPDATE CARTA SET Saldo = Saldo - @Importo - @Commissione WHERE NumeroIdentificativo = @NumeroIdentificativo";
+                    using (MySqlCommand updateSaldoCommand = new MySqlCommand(updateSaldoQuery, connection, transaction))
+                    {
+                        updateSaldoCommand.Parameters.AddWithValue("@Importo", importo);
+                        updateSaldoCommand.Parameters.AddWithValue("@Commissione", commissione);
+                        updateSaldoCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                        updateSaldoCommand.ExecuteNonQuery();
+                        Console.WriteLine("Query UPDATE SALDO eseguita con successo.");
+                    }
+
+                    // Commit della transazione
+                    transaction.Commit();
+                    Console.WriteLine("Transazione completata con successo.");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // Rollback della transazione in caso di errore
+                    transaction.Rollback();
+                    Console.WriteLine($"Errore durante l'esecuzione della transazione: {ex.Message}");
+                    MessageBox.Show($"Errore durante l'esecuzione della transazione: {ex.Message}", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
         }
+
+
     }
 }
