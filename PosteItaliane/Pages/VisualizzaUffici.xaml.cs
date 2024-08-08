@@ -30,11 +30,11 @@ namespace PosteItaliane.Pages
 
         }
 
-        private void LoadData() 
+        private void LoadData()
         {
-            try 
+            try
             {
-                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
                 string query = "SELECT * FROM UFFICIO_POSTALE";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
@@ -64,7 +64,7 @@ namespace PosteItaliane.Pages
                 MessageBox.Show("Errore di connessione: " + ex.Message);
             }
         }
-            
+
         private void btnIndietro_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,7 +58,7 @@ namespace PosteItaliane.Pages
             }
 
             // Chiamata al metodo MakeBonifico
-            if (MakeBonifico(iban, importoValue, causale))
+            if (MakeBonifico(iban, importoValue, causale, selectedItem.Content.ToString()))
             {
                 MessageBox.Show("Bonifico effettuato con successo!");
                 var mainWindow = Application.Current.MainWindow as MainWindow;
@@ -68,9 +69,82 @@ namespace PosteItaliane.Pages
                 MessageBox.Show("Errore durante il bonifico.");
             }
         }
-        private bool MakeBonifico(string iban, float importo, string causale)
+        private bool MakeBonifico(string iban, float importo, string causale, string tipoBonifico)
         {
-            return true;
+            float commissione = (tipoBonifico == "Istantaneo") ? 1.5f : 1f;
+            string ente = "Poste Italiane";
+            string tipologiaPagamento = "online";
+            //string NumeroIdentificativo = GetNumeroIdentificativo();
+            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                MySqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+                    // Messaggio di debug: Connessione e transazione iniziate
+                    Console.WriteLine("Connessione aperta e transazione iniziata.");
+
+                    // Genera un GUID per CodTransazione, da usare in entrambe le query
+                    string codTransazione = Guid.NewGuid().ToString();
+
+                    // Prima query: Inserire nella tabella TRANSAZIONE
+                    string queryTransazione = "INSERT INTO TRANSAZIONE (CodTransazione, Importo, Data, NumeroIdentificativo) VALUES (@CodTransazione, @Importo, @Data, @NumeroIdentificativo)";
+                    using (MySqlCommand commandTransazione = new MySqlCommand(queryTransazione, connection, transaction))
+                    {
+                        // Preparazione dei parametri
+                        commandTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
+                        commandTransazione.Parameters.AddWithValue("@Importo", importo);
+                        commandTransazione.Parameters.AddWithValue("@Data", DateTime.Now);
+                        commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", "1234567890123456"); // sostituire con un valore valido
+
+                        // Esecuzione della query
+                        commandTransazione.ExecuteNonQuery();
+                        Console.WriteLine("Query TRANSAZIONE eseguita con successo.");
+                    }
+
+                    // Seconda query: Inserire nella tabella TIPO_TRANSAZIONE
+                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale,Ente,Commissione,TipologiaPagamento) VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale,@Ente,@Commissione,@TipologiaPagamento)";
+                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
+                    {
+                        commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // Usa lo stesso CodTransazione
+                        commandTipoTransazione.Parameters.AddWithValue("@Tipo", tipoBonifico); // Utilizza il parametro tipoBonifico
+                        commandTipoTransazione.Parameters.AddWithValue("@IbanDestinatario", iban);
+                        commandTipoTransazione.Parameters.AddWithValue("@Causale", causale);
+                        commandTipoTransazione.Parameters.AddWithValue("@Ente", ente);
+                        commandTipoTransazione.Parameters.AddWithValue("@Commissione", commissione);
+                        commandTipoTransazione.Parameters.AddWithValue("@TipologiaPagamento", tipologiaPagamento);
+
+                        commandTipoTransazione.ExecuteNonQuery();
+                        Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
+                    }
+
+                    // Commit della transazione
+                    transaction.Commit();
+                    Console.WriteLine("Transazione completata con successo.");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // Rollback della transazione in caso di errore
+                    transaction.Rollback();
+                    Console.WriteLine($"Errore durante l'esecuzione della transazione: {ex.Message}");
+                    MessageBox.Show($"Errore durante l'esecuzione della transazione: {ex.Message}", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+        }
+        private string GetNumeroIdentificativo(MySqlConnection connection)
+        {
+            string query = "SELECT NumeroIdentificativo FROM Utenti WHERE Id = @UserId"; // Sostituisci @UserId con l'id dell'utente corrente
+            using (MySqlCommand command = new MySqlCommand(query, connection))
+            {
+                //command.Parameters.AddWithValue("@UserId",); // Assicurati di implementare GetCurrentUserId per ottenere l'id dell'utente corrente
+
+                object result = command.ExecuteScalar();
+                return result?.ToString();
+            }
         }
     }
 }

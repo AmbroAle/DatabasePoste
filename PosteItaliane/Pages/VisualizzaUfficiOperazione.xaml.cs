@@ -21,7 +21,7 @@ namespace PosteItaliane.Pages
             try
             {
                 // La stringa di connessione al database MySQL
-                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
 
                 // Query con parametro per selezionare i movimenti
                 string query = @"
@@ -66,7 +66,7 @@ namespace PosteItaliane.Pages
             try
             {
                 // La stringa di connessione al database MySQL
-                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
 
                 // Query con parametro per selezionare i movimenti
                 string query = @"
@@ -246,7 +246,7 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new Prenotazione());
         }
-           
+
     }
 }
 
