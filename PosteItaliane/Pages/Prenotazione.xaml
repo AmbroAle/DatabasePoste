@@ -9,6 +9,10 @@
       Title="Prenotazione">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="173*"/>
+            <ColumnDefinition Width="627*"/>
+        </Grid.ColumnDefinitions>
         <Button x:Name="btnVisualizzaUffici"                          
                    BorderThickness="0"
                    Content="Visualizza uffici postali"
@@ -16,8 +20,8 @@
                    FontSize="14"
                    FontFamily="Montserrat"
                    Cursor="Hand"
-                   Margin="-278,-135,278,185"
-                   Click="btnVisualizzaUffici_Click" Grid.Column="0">
+                   Margin="-233,-135,233,185"
+                   Click="btnVisualizzaUffici_Click" Grid.Column="0" Grid.ColumnSpan="2">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#EDF60E"/>
@@ -30,7 +34,7 @@
             </Button.Style>
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border Width="150" Height="40"
+                    <Border Width="300" Height="40"
                                CornerRadius="20"
                                Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center"
@@ -48,8 +52,7 @@
                    FontFamily="Montserrat"
                    Cursor="Hand"
                    Margin="0,137,0,-87"
-                   Click="btnIndietro_Click"
-                   Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                   Click="btnIndietro_Click" Grid.Column="0" Grid.ColumnSpan="2">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#EDF60E"/>
@@ -79,8 +82,8 @@
                  FontSize="14"
                  FontFamily="Montserrat"
                  Cursor="Hand"
-                 Margin="205,-135,-205,185"
-                 Click="btnVisualizzaUfficiOperazione_Click" Grid.Column="0">
+                 Margin="34,-135,-205,185"
+                 Click="btnVisualizzaUfficiOperazione_Click" Grid.Column="1">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#EDF60E"/>
@@ -103,6 +106,99 @@
             </Button.Template>
         </Button>
 
+        <Button x:Name="btnVisualizzaUfficiRecensione"                          
+                   BorderThickness="0"
+                   Content="Visualizza uffici postali in base alle recensioni"
+                   Foreground="Black"
+                   FontSize="14"
+                   FontFamily="Montserrat"
+                   Cursor="Hand"
+                   Margin="-233,-63,233,113"
+                   Click="btnVisualizzaUfficiRecensione_Click" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="300" Height="40"
+                               CornerRadius="20"
+                               Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
+        <Button x:Name="btnEffettuaRecensione"                          
+                 BorderThickness="0"
+                 Content="Effettua recensione"
+                 Foreground="Black"
+                 FontSize="14"
+                 FontFamily="Montserrat"
+                 Cursor="Hand"
+                 Margin="34,-63,-205,113"
+                 Click="btnEffettuaRecensione_Click" Grid.Column="1">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="300" Height="40"
+                             CornerRadius="20"
+                             Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button x:Name="btnVisualizzaRecensioni"                          
+                 BorderThickness="0"
+                 Content="Visualizza recensioni"
+                 Foreground="Black"
+                 FontSize="14"
+                 FontFamily="Montserrat"
+                 Cursor="Hand"
+                 Margin="-233,10,233,40"
+                 Click="btnVisualizzaRecensioni_Click" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="300" Height="40"
+                             CornerRadius="20"
+                             Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
 
     </Grid>
