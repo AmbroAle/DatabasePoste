@@ -1,0 +1,135 @@
+﻿<Page x:Class="PosteItaliane.Pages.VisualizzaRecensioni"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PosteItaliane.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="VisualizzaRecensioni">
+
+    <Grid>
+        <!-- StackPanel per gli elementi in alto -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="10">
+            <!-- DataGrid per gli uffici -->
+            <DataGrid x:Name="UfficiDataGrid"
+                      AutoGenerateColumns="False"
+                      VerticalAlignment="Top"
+                      Height="126"
+                      Width="472">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
+                    <DataGridTextColumn Header="Via" Binding="{Binding Ind_Via}" Width="*"/>
+                    <DataGridTextColumn Header="Civico" Binding="{Binding Ind_Civico}" Width="*"/>
+                    <DataGridTextColumn Header="Comune" Binding="{Binding Ind_Comune}" Width="*"/>
+                    <DataGridTextColumn Header="Regione" Binding="{Binding Ind_Regione}" Width="*"/>
+                    <DataGridTextColumn Header="Provincia" Binding="{Binding Ind_Provincia}" Width="*"/>
+                    <DataGridTextColumn Header="Apertura" Binding="{Binding Apertura}" Width="*"/>
+                    <DataGridTextColumn Header="Chiusura" Binding="{Binding Chiusura}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Spazio tra il DataGrid e i controlli successivi -->
+            <StackPanel Width="20"/>
+
+            <!-- Label e TextBox per l'ID Ufficio -->
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center">
+                <TextBlock Text="IdUfficio"
+                           VerticalAlignment="Center"
+                           Margin="0,0,0,5"/>
+                <TextBox x:Name="txtIdUfficio"
+                         VerticalAlignment="Center"
+                         Width="120"/>
+            </StackPanel>
+
+            <!-- Spazio tra il TextBox e il bottone Cerca -->
+            <StackPanel Width="10"/>
+
+            <!-- Bottone Cerca -->
+            <Button x:Name="btnCerca"
+                    VerticalAlignment="Center"
+                    Content="Cerca"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Margin="5,0,0,0"
+                    Click="btnCerca_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#EDF60E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="80" Height="40"
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+
+        <!-- DataGrid per le recensioni -->
+        <DataGrid x:Name="RecensioniDataGrid"
+                  AutoGenerateColumns="False"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="10"
+                  Height="200"
+                  Width="780">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Testo" Binding="{Binding Testo}" Width="*"/>
+                <DataGridTextColumn Header="Voto" Binding="{Binding Voto}" Width="*"/>
+                <DataGridTextColumn Header="Data" Binding="{Binding Data}" Width="*"/>
+                <DataGridTextColumn Header="CF" Binding="{Binding CF}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Bottone Indietro posizionato in basso a sinistra -->
+        <Button x:Name="btnIndietro"
+                Content="Indietro"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="10"
+                Foreground="Black"
+                FontSize="14"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Click="btnIndietro_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="150" Height="40"
+                            CornerRadius="20"
+                            Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+    </Grid>
+</Page>

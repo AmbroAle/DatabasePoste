@@ -54,5 +54,11 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new EffettuaRecensione());
         }
+
+        private void btnVisualizzaRecensioni_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new VisualizzaRecensioni());
+        }
     }
 }

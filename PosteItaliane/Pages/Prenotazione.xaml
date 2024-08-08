@@ -169,5 +169,37 @@
             </Button.Template>
         </Button>
 
+        <Button x:Name="btnVisualizzaRecensioni"                          
+                 BorderThickness="0"
+                 Content="Visualizza recensioni"
+                 Foreground="Black"
+                 FontSize="14"
+                 FontFamily="Montserrat"
+                 Cursor="Hand"
+                 Margin="-233,10,233,40"
+                 Click="btnVisualizzaRecensioni_Click" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="300" Height="40"
+                             CornerRadius="20"
+                             Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
     </Grid>
 </Page>
