@@ -76,6 +76,7 @@ namespace PosteItaliane.Pages
             string tipologiaPagamento = "online";
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
             string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
@@ -89,24 +90,37 @@ namespace PosteItaliane.Pages
                     // Genera un GUID per CodTransazione, da usare in entrambe le query
                     string codTransazione = Guid.NewGuid().ToString();
 
+                    // Verifica se il conto/carta ha abbastanza saldo
+                    string checkSaldoQuery = "SELECT Saldo FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
+                    float saldo;
+                    using (MySqlCommand checkSaldoCommand = new MySqlCommand(checkSaldoQuery, connection, transaction))
+                    {
+                        checkSaldoCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+                        saldo = Convert.ToSingle(checkSaldoCommand.ExecuteScalar());
+                    }
+
+                    if (saldo < importo + commissione)
+                    {
+                        MessageBox.Show("Saldo insufficiente per effettuare il bonifico.");
+                        return false;
+                    }
+
                     // Prima query: Inserire nella tabella TRANSAZIONE
                     string queryTransazione = "INSERT INTO TRANSAZIONE (CodTransazione, Importo, Data, NumeroIdentificativo) VALUES (@CodTransazione, @Importo, @Data, @NumeroIdentificativo)";
                     using (MySqlCommand commandTransazione = new MySqlCommand(queryTransazione, connection, transaction))
                     {
-                        // Preparazione dei parametri
                         commandTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
                         commandTransazione.Parameters.AddWithValue("@Importo", importo);
                         commandTransazione.Parameters.AddWithValue("@Data", DateTime.Now);
-                        commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", "1234567890123456"); // sostituire con un valore valido
+                        commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
 
-                        // Esecuzione della query
                         commandTransazione.ExecuteNonQuery();
                         Console.WriteLine("Query TRANSAZIONE eseguita con successo.");
                     }
 
                     // Seconda query: Inserire nella tabella TIPO_TRANSAZIONE
-                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale,Ente,Commissione,TipologiaPagamento,NumeroIdentificativo) " +
-                        "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale,@Ente,@Commissione,@TipologiaPagamento,@NumeroIdentificativo)";
+                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale, Ente, Commissione, TipologiaPagamento, NumeroIdentificativo) " +
+                        "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale, @Ente, @Commissione, @TipologiaPagamento, @NumeroIdentificativo)";
                     using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
                     {
                         commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // Usa lo stesso CodTransazione
@@ -120,6 +134,18 @@ namespace PosteItaliane.Pages
 
                         commandTipoTransazione.ExecuteNonQuery();
                         Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
+                    }
+
+                    // Terza query: Aggiornare il saldo della carta/conto
+                    string updateSaldoQuery = "UPDATE CARTA SET Saldo = Saldo - @Importo - @Commissione WHERE NumeroIdentificativo = @NumeroIdentificativo";
+                    using (MySqlCommand updateSaldoCommand = new MySqlCommand(updateSaldoQuery, connection, transaction))
+                    {
+                        updateSaldoCommand.Parameters.AddWithValue("@Importo", importo);
+                        updateSaldoCommand.Parameters.AddWithValue("@Commissione", commissione);
+                        updateSaldoCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                        updateSaldoCommand.ExecuteNonQuery();
+                        Console.WriteLine("Query UPDATE SALDO eseguita con successo.");
                     }
 
                     // Commit della transazione
@@ -137,5 +163,7 @@ namespace PosteItaliane.Pages
                 }
             }
         }
+
+
     }
 }
