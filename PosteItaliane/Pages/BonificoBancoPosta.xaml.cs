@@ -71,7 +71,7 @@ namespace PosteItaliane.Pages
         }
         private bool MakeBonifico(string iban, float importo, string causale, string tipoBonifico)
         {
-            float commissione = (tipoBonifico == "Istantaneo") ? 1.5f : 1f;
+            float commissione = (tipoBonifico == "Bonifico Istantaneo") ? 1f : 0;
             string ente = "Poste Italiane";
             string tipologiaPagamento = "online";
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
