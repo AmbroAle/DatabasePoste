@@ -14,10 +14,13 @@ namespace PosteItaliane
         public string CF { get; set; }
         public string NumeroIdentificativo { get; set; }
         // Costruttore privato per impedire la creazione diretta di istanze
+        public int Operazione { get; set; }
+        
         private UserSession()
         {
             this.CF = "prova";
             this.NumeroIdentificativo = "";
+            this.Operazione = 0;
         }
 
         // Metodo per ottenere l'istanza unica del singleton
