@@ -176,14 +176,14 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBlock Text="Ricarica" FontSize="18" FontWeight="Bold" Margin="62,13,0,17" HorizontalAlignment="Left" Width="73" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Ricarica" FontSize="18" FontWeight="Bold" Margin="60,17,0,17" HorizontalAlignment="Left" Width="68" Grid.ColumnSpan="2"/>
                 <TextBlock Text="Seleziona la carta"
                            HorizontalAlignment="Left"
                            Foreground="Black"
                            FontSize="14"
                            FontWeight="Medium"
                            FontFamily="Montserrat"                             
-                           Margin="42,17,0,18"
+                           Margin="39,17,0,18"
                            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
 
                 <ComboBox x:Name="TipoBonificoComboBox" Margin="0,43,0,78" Style="{StaticResource ModernComboBox}" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="4"/>
@@ -194,7 +194,7 @@
                            FontSize="14"
                            FontWeight="Medium"
                            FontFamily="Montserrat"                             
-                           Margin="70,52,0,38"
+                           Margin="66,52,0,38"
                            Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                            HorizontalAlignment="Left"/>
 
@@ -215,7 +215,7 @@
 
                 <Button x:Name="btnRicarica"                          
                 BorderThickness="0"
-                Content="Effetua ricarica"
+                Content="Effettua ricarica"
                 Foreground="Black"
                 FontSize="14"
                 FontFamily="Montserrat"

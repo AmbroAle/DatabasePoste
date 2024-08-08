@@ -115,11 +115,12 @@
 
             <!-- Nuova riga per i bottoni in fondo -->
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button Content="Button1" Width="140" Height="40" Margin="5"
+                <Button Content="Ricarica" Width="140" Height="40" Margin="5"
                         Foreground="Black"
                         FontSize="14"
                         FontFamily="Montserrat"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        Click="btnRicarica_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#EDF60E"/>
