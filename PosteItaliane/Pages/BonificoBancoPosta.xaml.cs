@@ -58,7 +58,7 @@ namespace PosteItaliane.Pages
             }
 
             // Chiamata al metodo MakeBonifico
-            if (MakeBonifico(iban, importoValue, causale, selectedItem.Content.ToString()))
+            if (MakeBonifico(iban, importoValue, causale, selectedItem.Content.ToString() ?? "Default"))
             {
                 MessageBox.Show("Bonifico effettuato con successo!");
                 var mainWindow = Application.Current.MainWindow as MainWindow;
