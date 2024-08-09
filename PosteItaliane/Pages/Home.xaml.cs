@@ -109,5 +109,11 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new ModificaDati());
         }
+
+        private void btnTransazioniUfficio_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new TransazioniUfficio());
+        }
     }
 }
