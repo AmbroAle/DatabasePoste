@@ -66,7 +66,7 @@ namespace PosteItaliane.Pages
         private void btnIndietro_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.NavigateToPage(new Home());
+            mainWindow?.NavigateToPage(new Prenotazione());
         }
 
         private void btnCerca_Click(object sender, RoutedEventArgs e)

@@ -153,7 +153,7 @@
                         FontSize="14"
                         FontFamily="Montserrat"
                         Cursor="Hand"
-                        Click="btnInserisciCa_Click">
+                        Click="btnInserisciCarta_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#EDF60E"/>
@@ -221,12 +221,12 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Button Content="button1" Width="140" Height="40"
+                <Button x:Name="SpesaMensile" Content="Spesa mensile" Width="140" Height="40"
                     Foreground="Black"
                     FontSize="14"
                     FontFamily="Montserrat"
                     Cursor="Hand"
-                    Click="btn1">
+                    Click="btnSpesaMensile_Click">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#EDF60E"/>
