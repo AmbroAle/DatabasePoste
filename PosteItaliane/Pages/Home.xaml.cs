@@ -102,7 +102,7 @@ namespace PosteItaliane.Pages
         private void btnNotifiche_Click(object sender, RoutedEventArgs e)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.NavigateToPage(new SpesaMensile());
+            mainWindow?.NavigateToPage(new Notifica());
         }
         private void btnModificaDati_Click(object sender, RoutedEventArgs e)
         {
