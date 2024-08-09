@@ -88,7 +88,7 @@
                     FontSize="14"
                     FontFamily="Montserrat"
                     Cursor="Hand"
-                    Margin="7,10,2,10"
+                    Margin="4,10,5,10"
                     Click="btnBonifico_Click">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -279,7 +279,7 @@
                 FontSize="14"
                 FontFamily="Montserrat"
                 Cursor="Hand"
-                Margin="6,10,4,10"
+                Margin="5,10,5,10"
                 Click="btnModificaDati_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
