@@ -98,5 +98,11 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new SpesaMensile());
         }
+
+        private void btnNotifiche_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new SpesaMensile());
+        }
     }
 }

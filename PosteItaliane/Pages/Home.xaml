@@ -197,12 +197,12 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Button Content="Button" Width="140" Height="40"
+                <Button Content="Notifiche" Width="140" Height="40"
                     Foreground="Black"
                     FontSize="14"
                     FontFamily="Montserrat"
                     Cursor="Hand"
-                    Click="btnButton">
+                    Click="btnNotifiche_Click">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#EDF60E"/>
