@@ -202,7 +202,7 @@
                     FontSize="14"
                     FontFamily="Montserrat"
                     Cursor="Hand"
-                    Click="btnButton">
+                    >
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#EDF60E"/>
@@ -226,7 +226,7 @@
                     FontSize="14"
                     FontFamily="Montserrat"
                     Cursor="Hand"
-                    Click="btn1">
+                    >
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#EDF60E"/>
