@@ -114,7 +114,15 @@
             </Button>
 
             <!-- Nuova riga per i bottoni in fondo -->
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" RenderTransformOrigin="0.5,0.5">
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0"/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
                 <Button Content="Ricarica" Width="140" Height="40" Margin="5"
                         Foreground="Black"
                         FontSize="14"
@@ -140,12 +148,12 @@
                     </Button.Template>
                 </Button>
 
-                <Button Content="Iserisci carta" Width="140" Height="40" Margin="5"
+                <Button Content="Inserisci carta" Width="140" Height="40" Margin="5"
                         Foreground="Black"
                         FontSize="14"
                         FontFamily="Montserrat"
                         Cursor="Hand"
-                        Click="btnInserisciCarta_Click">
+                        Click="btnInserisciCa_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#EDF60E"/>
@@ -183,6 +191,54 @@
                     </Button.Style>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Content="Button" Width="140" Height="40"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btnButton">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#EDF60E"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="20" Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button Content="button1" Width="140" Height="40"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                    Click="btn1">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="#EDF60E"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#28AEED"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
                             <Border CornerRadius="20" Background="{TemplateBinding Background}">
                                 <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
