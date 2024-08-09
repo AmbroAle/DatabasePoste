@@ -179,7 +179,6 @@
                 </Button>
                 <TextBlock Text="Inserisci la carta PostePay" FontSize="18" FontWeight="Bold" Margin="10,17,0,21" HorizontalAlignment="Left" Width="222" Grid.ColumnSpan="2"/>
                 <TextBlock Text="Inserisci l'iban"
-                           x:Name="txtIban"
                            HorizontalAlignment="Left"
                            Foreground="Black"
                            FontSize="14"
@@ -190,7 +189,7 @@
 
 
 
-                <TextBlock Text="Cvv"
+                <TextBlock Text="Ccv"
                            Foreground="Black"
                            FontSize="14"
                            FontWeight="Medium"
@@ -199,7 +198,7 @@
                            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                            HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" RenderTransformOrigin="1.187,0.553" Grid.RowSpan="4"/>
 
-                <TextBox x:Name="txtCvv"
+                <TextBox x:Name="txtCCV"
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Montserrat"                            
@@ -245,7 +244,7 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBox x:Name="txtImporto_Copia"
+                <TextBox x:Name="txtIban"
                     FontSize="13"
                     FontWeight="Medium"
                     FontFamily="Montserrat"                            
