@@ -58,7 +58,7 @@ namespace PosteItaliane.Pages
 
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
                 string query = "SELECT Password, CF FROM ACCOUNT WHERE Email = @Email";
                 string quaryCarta = "SELECT NumeroIdentificativo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
 
