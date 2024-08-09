@@ -24,5 +24,14 @@ namespace PosteItaliane.Pages
         {
             InitializeComponent();
         }
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new Home());
+        }
+        private void btnInserisciCarta_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
