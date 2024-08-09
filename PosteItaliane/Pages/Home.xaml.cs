@@ -87,5 +87,10 @@ namespace PosteItaliane.Pages
             mainWindow?.NavigateToPage(new Ricarica());
         }
 
+        private void btnInserisciCarta_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new InserimentoNuovaCarta());
+        }
     }
 }

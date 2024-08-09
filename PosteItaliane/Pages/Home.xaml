@@ -140,11 +140,12 @@
                     </Button.Template>
                 </Button>
 
-                <Button Content="Button2" Width="140" Height="40" Margin="5"
+                <Button Content="Iserisci carta" Width="140" Height="40" Margin="5"
                         Foreground="Black"
                         FontSize="14"
                         FontFamily="Montserrat"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        Click="btnInserisciCarta_Click">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#EDF60E"/>
