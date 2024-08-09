@@ -79,7 +79,7 @@
                        FontSize="25"
                        FontWeight="Medium"
                        FontFamily="Montserrat"
-                       Margin="365,80,0,148" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                       Margin="365,80,0,78" Grid.Column="0" Grid.ColumnSpan="2"/>
 
             <!-- Bottone Bonifico -->
             <Button x:Name="btnBonifico" Grid.Row="1" Grid.Column="1"
