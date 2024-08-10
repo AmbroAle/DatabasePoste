@@ -33,10 +33,10 @@ namespace PosteItaliane.Pages
             try
             {
                 // La stringa di connessione al database MySQL
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
 
-                // Query con parametro per selezionare i movimenti
-                string query = @"
+                // Query originale per selezionare i movimenti
+                string queryMovimenti = @"
             SELECT
                 TRANSAZIONE.*,
                 TIPO_TRANSAZIONE.Tipo,
@@ -53,28 +53,57 @@ namespace PosteItaliane.Pages
             WHERE
                 TRANSAZIONE.NumeroIdentificativo = @NumeroIdentificativo";
 
-                // Numero identificativo della carta, sostituisci con il valore corretto
-                string numeroIdentificativoValue = UserSession.Instance.NumeroIdentificativo; // Inserisci qui il numero identificativo corretto
+                // Query aggiuntiva per calcolare il totale degli importi per tipo
+                string queryTotalePerTipo = @"
+            SELECT
+                tt.Tipo,
+                SUM(t.Importo) AS TotaleImporto
+            FROM
+                TRANSAZIONE t
+            INNER JOIN
+                TIPO_TRANSAZIONE tt ON t.CodTransazione = tt.CodTransazione
+            WHERE
+                t.NumeroIdentificativo = @NumeroIdentificativo
+            GROUP BY
+                tt.Tipo
+            ORDER BY
+                TotaleImporto DESC";
+
+                // Numero identificativo della carta
+                string numeroIdentificativoValue = UserSession.Instance.NumeroIdentificativo; // Assicurati che questa proprietà esista e sia correttamente valorizzata
 
                 // Creazione e apertura della connessione
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
 
-                    // Creazione del comando e aggiunta del parametro
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    // Esecuzione della prima query per selezionare i movimenti
+                    using (MySqlCommand cmdMovimenti = new MySqlCommand(queryMovimenti, conn))
                     {
-                        cmd.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativoValue);
+                        cmdMovimenti.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativoValue);
 
-                        // Esecuzione della query e recupero del risultato
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        using (MySqlDataReader reader = cmdMovimenti.ExecuteReader())
                         {
-                            DataTable dataTable = new DataTable();
-                            dataTable.Load(reader);
+                            DataTable dataTableMovimenti = new DataTable();
+                            dataTableMovimenti.Load(reader);
 
-                            // Assuming you have a DataGrid or similar control to display the results
-                            MovimentiDataGrid.ItemsSource = dataTable.DefaultView;
+                            // Visualizzazione dei movimenti nella grid MovimentiDataGrid
+                            MovimentiDataGrid.ItemsSource = dataTableMovimenti.DefaultView;
+                        }
+                    }
 
+                    // Esecuzione della seconda query per calcolare il totale per tipo
+                    using (MySqlCommand cmdTotale = new MySqlCommand(queryTotalePerTipo, conn))
+                    {
+                        cmdTotale.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativoValue);
+
+                        using (MySqlDataReader readerTotale = cmdTotale.ExecuteReader())
+                        {
+                            DataTable dataTableTotale = new DataTable();
+                            dataTableTotale.Load(readerTotale);
+
+                            // Visualizzazione dei totali nella grid TotaleTipoDataGrid
+                            TotaleTipoDataGrid.ItemsSource = dataTableTotale.DefaultView;
                         }
                     }
                 }
