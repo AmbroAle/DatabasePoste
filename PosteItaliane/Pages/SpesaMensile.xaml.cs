@@ -39,7 +39,7 @@ namespace PosteItaliane.Pages
                 SELECT t.CodTransazione, t.Importo, t.Data, tt.Tipo 
                 FROM TRANSAZIONE t
                 INNER JOIN TIPO_TRANSAZIONE tt ON t.CodTransazione = tt.CodTransazione
-                WHERE t.Data >= @startOfMonth AND t.Data <= @endOfMonth AND t.NumeroIdentificativo = @numeroIdentificativo;";
+                WHERE t.Data >= @startOfMonth AND t.Data <= @endOfMonth AND t.NumeroIdentificativo = @numeroIdentificativo AND tt.Tipo <> 'deposito';";
 
             DataTable dataTable = new DataTable();
             decimal totalImporto = 0;
