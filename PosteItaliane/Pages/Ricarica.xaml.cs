@@ -94,6 +94,7 @@ namespace PosteItaliane.Pages
                 if (MakeRicarica(importo, iban))
                 {
                     MessageBox.Show($"Ricarica di {importo:C} effettuata sulla carta con IBAN: {iban}", "Successo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
             }
             else
@@ -208,6 +209,23 @@ namespace PosteItaliane.Pages
 
                                         commandTipoTransazione.ExecuteNonQuery();
                                         Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
+                                    }
+                                    string Id = Guid.NewGuid().ToString();
+                                    string CF = UserSession.Instance.CF;
+                                    bool Letta = false;
+                                    string Testo = $"Ricarica di {importo:C} effettuata sulla carta con IBAN: {iban}";
+                                    string Titolo = $"Ricarica Effettuata";
+                                    string queryNotifica = "INSERT INTO notifica (Id, Titolo, Testo, Letta, CF) " +
+                                        "VALUES (@Id, @Titolo, @Testo, @Letta, @CF)";
+                                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryNotifica, connection, transaction))
+                                    {
+                                        commandTipoTransazione.Parameters.AddWithValue("@Id", Id);
+                                        commandTipoTransazione.Parameters.AddWithValue("@Titolo", Titolo);
+                                        commandTipoTransazione.Parameters.AddWithValue("@Testo", Testo);
+                                        commandTipoTransazione.Parameters.AddWithValue("@Letta", Letta);
+                                        commandTipoTransazione.Parameters.AddWithValue("@CF", CF);
+
+                                        commandTipoTransazione.ExecuteNonQuery();
                                     }
                                 }
                             }
