@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -36,13 +37,21 @@ namespace PosteItaliane.Pages
             string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
             bool emailChanged = false;
             bool passwordChanged = false;
+
+            // Valori dei campi
+            string email = txtEmail.Text.Trim(); // Trim rimuove gli spazi bianchi all'inizio e alla fine di una stringa
+            string password = txtPassword.Password.Trim();
+
+            // Verifica se entrambi i campi sono vuoti
+            if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Inserisci almeno un dato da aggiornare.", "Nessun dato inserito", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-
-                // Valori dei campi
-                string email = txtEmail.Text.Trim();//Trim rimuove gli spazi bianchi all'inizio e alla fine di una stringa
-                string password = txtPassword.Password.Trim();
 
                 // Costruzione della query SQL dinamica
                 var updateQuery = new StringBuilder("UPDATE account SET ");
@@ -75,26 +84,55 @@ namespace PosteItaliane.Pages
                     {
                         command.Parameters.AddRange(parameters.ToArray());
                         int rowsAffected = command.ExecuteNonQuery();
-                        if (emailChanged && passwordChanged)
+
+                        if (rowsAffected > 0)
                         {
-                            MessageBox.Show("La email e la password sono state aggiornate");
-                        }
-                        else if (passwordChanged == false && emailChanged == true)
-                        {
-                            MessageBox.Show("La email è stata aggiornata");
+                            // Messaggio in base ai dati aggiornati
+                            if (emailChanged && passwordChanged)
+                            {
+                                MessageBox.Show("L'email e la password sono state aggiornate.");
+                            }
+                            else if (emailChanged)
+                            {
+                                MessageBox.Show("L'email è stata aggiornata.");
+                            }
+                            else
+                            {
+                                MessageBox.Show("La password è stata aggiornata.");
+                            }
+
+                            string Id = Guid.NewGuid().ToString();
+                            string CF = UserSession.Instance.CF;
+                            bool Letta = false;
+                            string Testo = "Hai aggiornato i tuoi dati";
+                            string Titolo = "Aggiornamento dati";
+                            string queryNotifica = "INSERT INTO notifica (Id, Titolo, Testo, Letta, CF) " +
+                                "VALUES (@Id, @Titolo, @Testo, @Letta, @CF)";
+
+                            using (MySqlCommand commandNotifica = new MySqlCommand(queryNotifica, connection))
+                            {
+                                commandNotifica.Parameters.AddWithValue("@Id", Id);
+                                commandNotifica.Parameters.AddWithValue("@Titolo", Titolo);
+                                commandNotifica.Parameters.AddWithValue("@Testo", Testo);
+                                commandNotifica.Parameters.AddWithValue("@Letta", Letta);
+                                commandNotifica.Parameters.AddWithValue("@CF", CF);
+
+                                commandNotifica.ExecuteNonQuery();
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("La password è stata aggiornata");
+                            MessageBox.Show("Non è stato possibile aggiornare i dati.", "Errore di aggiornamento", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Nessun campo da aggiornare.");
+                    MessageBox.Show("Nessun campo da aggiornare.", "Nessuna modifica", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
+
 
 
     }

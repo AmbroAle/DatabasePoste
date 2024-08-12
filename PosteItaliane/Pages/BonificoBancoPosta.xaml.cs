@@ -147,7 +147,23 @@ namespace PosteItaliane.Pages
                         updateSaldoCommand.ExecuteNonQuery();
                         Console.WriteLine("Query UPDATE SALDO eseguita con successo.");
                     }
+                    string Id = Guid.NewGuid().ToString();
+                    string CF = UserSession.Instance.CF;
+                    bool Letta = false;
+                    string Testo = $"Hai effettuato un {tipoBonifico} di {importo}€ a favore di {iban} con causale {causale}";
+                    string Titolo = $"{tipoBonifico}";
+                    string queryNotifica = "INSERT INTO notifica (Id, Titolo, Testo, Letta, CF) " +
+                        "VALUES (@Id, @Titolo, @Testo, @Letta, @CF)";
+                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryNotifica, connection, transaction))
+                    {
+                        commandTipoTransazione.Parameters.AddWithValue("@Id", Id);
+                        commandTipoTransazione.Parameters.AddWithValue("@Titolo", Titolo);
+                        commandTipoTransazione.Parameters.AddWithValue("@Testo", Testo);
+                        commandTipoTransazione.Parameters.AddWithValue("@Letta", Letta);
+                        commandTipoTransazione.Parameters.AddWithValue("@CF", CF);
 
+                        commandTipoTransazione.ExecuteNonQuery();
+                    }
                     // Commit della transazione
                     transaction.Commit();
                     Console.WriteLine("Transazione completata con successo.");
