@@ -32,7 +32,7 @@
                   FontSize="14"
                   FontFamily="Montserrat"
                   Cursor="Hand"
-                  Margin="0,209,0,-159"
+                  Margin="197,380,414,18"
                   Click="btnIndietro_Click" Grid.Column="0">
             <Button.Style>
                 <Style TargetType="Button">
@@ -51,6 +51,36 @@
                               Background="{TemplateBinding Background}">
                         <ContentPresenter VerticalAlignment="Center"
                                             HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button x:Name="btnLetta"                          
+            BorderThickness="0"
+            Content="Segna come lette"
+            Foreground="Black"
+            FontSize="14"
+            FontFamily="Montserrat"
+            Cursor="Hand"
+            Margin="421,380,190,18"
+            Click="btnLetta_Click" Grid.Column="0">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#EDF60E"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#28AEED"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Width="150" Height="40"
+                        CornerRadius="20"
+                        Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                            HorizontalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Button.Template>

@@ -89,6 +89,51 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new Home());
         }
+
+        private void btnLetta_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string CF = UserSession.Instance.CF;
+                if (string.IsNullOrEmpty(CF))
+                {
+                    MessageBox.Show("Codice fiscale non disponibile.");
+                    return;
+                }
+
+                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string updateQuery = "UPDATE NOTIFICA SET Letta = @Letta WHERE CF = @CF";
+
+                using (MySqlConnection conn = new MySqlConnection(connStr))
+                {
+                    conn.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Letta", true);  // Imposta Letta a true
+                        cmd.Parameters.AddWithValue("@CF", CF);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Tutte le notifiche sono state segnate come lette.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nessuna notifica trovata per questo utente.");
+                        }
+
+                        LoadData();
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Errore di connessione: " + ex.Message);
+            }
+        }
+
     }
 }
 
