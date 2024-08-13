@@ -85,16 +85,14 @@ namespace PosteItaliane.Pages
 
                             command.ExecuteNonQuery();
                         }
-                        string Id = Guid.NewGuid().ToString();
                         string CF = UserSession.Instance.CF;
                         bool Letta = false;
                         string Testo = $"Hai aggiunto una nuova carta";
                         string Titolo = $"Aggiunta una nuova carta";
-                        string queryNotifica = "INSERT INTO notifica (Id, Titolo, Testo, Letta, CF) " +
-                            "VALUES (@Id, @Titolo, @Testo, @Letta, @CF)";
+                        string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) " +
+                            "VALUES (@Titolo, @Testo, @Letta, @CF)";
                         using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryNotifica, connection, transaction))
                         {
-                            commandTipoTransazione.Parameters.AddWithValue("@Id", Id);
                             commandTipoTransazione.Parameters.AddWithValue("@Titolo", Titolo);
                             commandTipoTransazione.Parameters.AddWithValue("@Testo", Testo);
                             commandTipoTransazione.Parameters.AddWithValue("@Letta", Letta);

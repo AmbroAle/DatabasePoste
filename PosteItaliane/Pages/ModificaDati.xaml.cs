@@ -101,17 +101,15 @@ namespace PosteItaliane.Pages
                                 MessageBox.Show("La password è stata aggiornata.");
                             }
 
-                            string Id = Guid.NewGuid().ToString();
                             string CF = UserSession.Instance.CF;
                             bool Letta = false;
                             string Testo = "Hai aggiornato i tuoi dati";
                             string Titolo = "Aggiornamento dati";
-                            string queryNotifica = "INSERT INTO notifica (Id, Titolo, Testo, Letta, CF) " +
-                                "VALUES (@Id, @Titolo, @Testo, @Letta, @CF)";
+                            string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) " +
+                                "VALUES (@Titolo, @Testo, @Letta, @CF)";
 
                             using (MySqlCommand commandNotifica = new MySqlCommand(queryNotifica, connection))
                             {
-                                commandNotifica.Parameters.AddWithValue("@Id", Id);
                                 commandNotifica.Parameters.AddWithValue("@Titolo", Titolo);
                                 commandNotifica.Parameters.AddWithValue("@Testo", Testo);
                                 commandNotifica.Parameters.AddWithValue("@Letta", Letta);
