@@ -210,6 +210,7 @@ namespace PosteItaliane.Pages
                                         commandTipoTransazione.ExecuteNonQuery();
                                         Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
                                     }
+                                    //add the notification to the database
                                     string CF = UserSession.Instance.CF;
                                     bool Letta = false;
                                     string Testo = $"Ricarica di {importo:C} effettuata sulla carta con IBAN: {iban}";
@@ -228,7 +229,6 @@ namespace PosteItaliane.Pages
                                 }
                             }
 
-                            // Commit the transaction
                             transaction.Commit();
                             return true;
                         }
