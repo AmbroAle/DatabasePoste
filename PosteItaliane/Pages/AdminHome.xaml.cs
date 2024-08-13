@@ -25,7 +25,11 @@ namespace PosteItaliane.Pages
         {
             InitializeComponent();
         }
-
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new Login());
+        }
         private void btnBloccaAccount_Click(object sender, RoutedEventArgs e)
         {
             string cf = txtCFBloccoAccount.Text.Trim();
@@ -146,6 +150,12 @@ namespace PosteItaliane.Pages
                 MessageBox.Show("Errore di connessione: " + ex.Message);
                 return false;
             }
+        }
+
+        private void btnVisualizzaUtenti_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new VisualizzaUtenti());
         }
     }
 }

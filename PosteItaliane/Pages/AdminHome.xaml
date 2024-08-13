@@ -56,15 +56,14 @@
                             Content="Blocca carta"
                             FontSize="14"
                             Click="btnBloccaCarta_Click"
-                            Background="#462AD8"
-                            Foreground="White"
+                            Foreground="Black"
                             BorderThickness="0"
                             Padding="10"
                             Height="40"
                             Width="150">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="#462AD8"/>
+                                <Setter Property="Background" Value="#EDF60E"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="#28AEED"/>
@@ -96,15 +95,14 @@
                             Content="Sblocca carta"
                             FontSize="14"
                             Click="btnSbloccaCarta_Click"
-                            Background="#462AD8"
-                            Foreground="White"
+                            Foreground="Black"
                             BorderThickness="0"
                             Padding="10"
                             Height="40"
                             Width="150">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="#462AD8"/>
+                                <Setter Property="Background" Value="#EDF60E"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="#28AEED"/>
@@ -136,15 +134,14 @@
                             Content="Blocca account"
                             FontSize="14"
                             Click="btnBloccaAccount_Click"
-                            Background="#462AD8"
-                            Foreground="White"
+                            Foreground="Black"
                             BorderThickness="0"
                             Padding="10"
                             Height="40"
                             Width="150">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="#462AD8"/>
+                                <Setter Property="Background" Value="#EDF60E"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="#28AEED"/>
@@ -176,15 +173,14 @@
                             Content="Sblocca account"
                             FontSize="14"
                             Click="btnSbloccaAccount_Click"
-                            Background="#462AD8"
-                            Foreground="White"
+                            Foreground="Black"
                             BorderThickness="0"
                             Padding="10"
                             Height="40"
                             Width="150">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="#462AD8"/>
+                                <Setter Property="Background" Value="#EDF60E"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="#28AEED"/>
@@ -204,6 +200,70 @@
                     </Button>
                 </StackPanel>
             </Grid>
+            <Button x:Name="Back"                          
+                BorderThickness="0"
+                Panel.ZIndex="1" 
+                Content="Torna Indietro"
+                Foreground="Black"
+                FontSize="14"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Margin="18,0,0,384"
+                Click="btnBack_Click"
+                HorizontalAlignment="Left" Grid.RowSpan="2">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#EDF60E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Width="150" Height="40"
+                            CornerRadius="20"
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="btnVisualizzaUtenti"                          
+                BorderThickness="0"
+                Panel.ZIndex="1" 
+                Content="Visualizza utenti"
+                Foreground="Black"
+                FontSize="14"
+                FontFamily="Montserrat"
+                Cursor="Hand"
+                Margin="325,288,0,34"
+                Click="btnVisualizzaUtenti_Click"
+                HorizontalAlignment="Left" Grid.Row="1">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#EDF60E"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Width="150" Height="40"
+                            CornerRadius="20"
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </Grid>
     </Border>
 </Page>
