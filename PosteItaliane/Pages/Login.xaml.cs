@@ -33,34 +33,55 @@ namespace PosteItaliane.Pages
             var mainWindow = Application.Current.MainWindow as MainWindow;
             mainWindow?.NavigateToPage(new SignUp());
         }
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
             string email = txtUser.Text;
             string password = txtPass.Password;
-            if (ConnectDatabase(email, password))
+
+            var loginDetails = ConnectDatabase(email, password);
+
+            if (loginDetails.HasValue)
             {
-                var mainWindow = Application.Current.MainWindow as MainWindow;
-                mainWindow?.NavigateToPage(new Home());
+                var (isAdmin, cf, isBlocked) = loginDetails.Value;
+
+                if (isBlocked)
+                {
+                    MessageBox.Show("Il tuo account è stato bloccato.");
+                }
+                else
+                {
+                    var mainWindow = Application.Current.MainWindow as MainWindow;
+                    if (isAdmin)
+                    {
+                        mainWindow?.NavigateToPage(new AdminHome());
+                    }
+                    else
+                    {
+                        mainWindow?.NavigateToPage(new Home());
+                    }
+                }
             }
             else
             {
                 MessageBox.Show("Email o password errati");
             }
-
         }
-        private bool ConnectDatabase(string email, string password)
+
+
+
+        private (bool IsAdmin, string CF, bool IsBlocked)? ConnectDatabase(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                return false;
+                return null;
             }
 
             try
             {
                 string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
-                string query = "SELECT Password, CF FROM ACCOUNT WHERE Email = @Email";
-                string quaryCarta = "SELECT NumeroIdentificativo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
+                string query = "SELECT Password, CF, Amministratore, BloccoAccount FROM ACCOUNT WHERE Email = @Email";
+                string queryCarta = "SELECT NumeroIdentificativo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
@@ -74,14 +95,16 @@ namespace PosteItaliane.Pages
                         {
                             string storedPassword = reader.GetString("Password");
                             string cf = reader.GetString("CF");
+                            bool isAdmin = reader.GetBoolean("Amministratore");
+                            bool isBlocked = reader.GetBoolean("BloccoAccount");
 
                             if (storedPassword == password)
                             {
                                 // Imposta il CF nella UserSession
                                 UserSession.Instance.CF = cf;
                                 reader.Close();
-                                //return true;
-                                MySqlCommand cmdCarta = new MySqlCommand(quaryCarta, conn);
+
+                                MySqlCommand cmdCarta = new MySqlCommand(queryCarta, conn);
                                 cmdCarta.Parameters.AddWithValue("@CF", cf);
                                 using (MySqlDataReader readerCarta = cmdCarta.ExecuteReader())
                                 {
@@ -91,8 +114,9 @@ namespace PosteItaliane.Pages
                                         UserSession.Instance.NumeroIdentificativo = NumeroIdentificativo;
                                     }
                                 }
+
+                                return (isAdmin, cf, isBlocked);
                             }
-                            return true;
                         }
                     }
                 }
@@ -102,9 +126,8 @@ namespace PosteItaliane.Pages
                 MessageBox.Show("Errore di connessione: " + ex.Message);
             }
 
-            return false;
+            return null;
         }
-
 
 
     }
