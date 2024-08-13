@@ -60,7 +60,7 @@ namespace PosteItaliane.Pages
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                string numeroIdentificativo = GeneraNumeroIdentificativoUnico(connection);
+                string numeroIdentificativo = GeneraNumeroIdentificativoUnico();
                 using (MySqlTransaction transaction = connection.BeginTransaction())
                 {
                     try
@@ -115,33 +115,16 @@ namespace PosteItaliane.Pages
                 }
             }
         }
-        private string GeneraNumeroIdentificativoUnico(MySqlConnection connection)
+
+        private string GeneraNumeroIdentificativoUnico()
         {
-            string numeroIdentificativo;
-            bool esiste;
+            DateTime now = DateTime.Now;
+            string timestamp = now.ToString("yyyyMMddHHmmssfff"); // Genera un timestamp unico
+            string randomPart = new Random().Next(1000, 9999).ToString(); // Aggiunge una parte casuale per garantire unicità
+            string numeroIdentificativo = timestamp + randomPart;
 
-            do
-            {
-                // Genera un numero identificativo casuale (ad esempio un numero di 16 cifre)
-                numeroIdentificativo = GeneraNumeroIdentificativoCasuale();
-
-                // Verifica se esiste già nel database
-                string queryVerifica = "SELECT COUNT(*) FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
-                MySqlCommand cmdVerifica = new MySqlCommand(queryVerifica, connection);
-                cmdVerifica.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-
-                esiste = Convert.ToInt32(cmdVerifica.ExecuteScalar()) > 0;
-            }
-            while (esiste);
-
-            return numeroIdentificativo;
+            return numeroIdentificativo.Substring(0, 16); // Assicura che sia lungo 16 cifre
         }
 
-        private string GeneraNumeroIdentificativoCasuale()
-        {
-            Random rnd = new Random();
-            string numeroIdentificativo = rnd.Next(100000000, 999999999).ToString("D9");
-            return numeroIdentificativo;
-        }
     }
 }
