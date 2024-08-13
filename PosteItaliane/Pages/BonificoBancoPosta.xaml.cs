@@ -90,6 +90,21 @@ namespace PosteItaliane.Pages
                     // Genera un GUID per CodTransazione, da usare in entrambe le query
                     string codTransazione = Guid.NewGuid().ToString();
 
+                    // Verifica se il conto/carta è bloccata
+                    string checkBloccataQuery = "SELECT BloccoCarta FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
+                    bool bloccata;
+                    using (MySqlCommand checkBloccataCommand = new MySqlCommand(checkBloccataQuery, connection, transaction))
+                    {
+                        checkBloccataCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+                        bloccata = Convert.ToBoolean(checkBloccataCommand.ExecuteScalar());
+                    }
+
+                    if (bloccata)
+                    {
+                        MessageBox.Show("La carta è bloccata. Impossibile effettuare il bonifico.");
+                        return false;
+                    }
+
                     // Verifica se il conto/carta ha abbastanza saldo
                     string checkSaldoQuery = "SELECT Saldo FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
                     float saldo;
@@ -147,21 +162,23 @@ namespace PosteItaliane.Pages
                         updateSaldoCommand.ExecuteNonQuery();
                         Console.WriteLine("Query UPDATE SALDO eseguita con successo.");
                     }
+
                     string CF = UserSession.Instance.CF;
                     bool Letta = false;
                     string Testo = $"Hai effettuato un {tipoBonifico} di {importo}€ a favore di {iban} con causale {causale}";
                     string Titolo = $"{tipoBonifico}";
                     string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) " +
                         "VALUES (@Titolo, @Testo, @Letta, @CF)";
-                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryNotifica, connection, transaction))
+                    using (MySqlCommand commandNotifica = new MySqlCommand(queryNotifica, connection, transaction))
                     {
-                        commandTipoTransazione.Parameters.AddWithValue("@Titolo", Titolo);
-                        commandTipoTransazione.Parameters.AddWithValue("@Testo", Testo);
-                        commandTipoTransazione.Parameters.AddWithValue("@Letta", Letta);
-                        commandTipoTransazione.Parameters.AddWithValue("@CF", CF);
+                        commandNotifica.Parameters.AddWithValue("@Titolo", Titolo);
+                        commandNotifica.Parameters.AddWithValue("@Testo", Testo);
+                        commandNotifica.Parameters.AddWithValue("@Letta", Letta);
+                        commandNotifica.Parameters.AddWithValue("@CF", CF);
 
-                        commandTipoTransazione.ExecuteNonQuery();
+                        commandNotifica.ExecuteNonQuery();
                     }
+
                     // Commit della transazione
                     transaction.Commit();
                     Console.WriteLine("Transazione completata con successo.");
@@ -177,7 +194,6 @@ namespace PosteItaliane.Pages
                 }
             }
         }
-
 
     }
 }

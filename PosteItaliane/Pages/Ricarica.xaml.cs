@@ -112,6 +112,7 @@ namespace PosteItaliane.Pages
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
             string tipo = "Ricarica";
             string causale = "Ricarica carta PostePay";
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -123,110 +124,137 @@ namespace PosteItaliane.Pages
                     {
                         try
                         {
-                            // Check if the IBAN selected for PostePay exists
-                            string checkPostePayQuery = "SELECT Saldo FROM CARTA WHERE Iban = @Iban AND Tipo = 'PostePay'";
+                            // Check if the IBAN selected for PostePay exists and is not blocked
+                            string checkPostePayQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE Iban = @Iban AND Tipo = 'PostePay'";
+                            decimal saldoPostePay;
+                            bool isPostePayBloccata;
+
                             using (MySqlCommand checkPostePayCommand = new MySqlCommand(checkPostePayQuery, connection, transaction))
                             {
                                 checkPostePayCommand.Parameters.AddWithValue("@Iban", iban);
-                                object result = checkPostePayCommand.ExecuteScalar();
 
-                                if (result == null)
+                                using (MySqlDataReader reader = checkPostePayCommand.ExecuteReader())
                                 {
-                                    MessageBox.Show("IBAN PostePay non trovato.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
-                                    return false;
+                                    if (!reader.Read())
+                                    {
+                                        MessageBox.Show("IBAN PostePay non trovato.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        return false;
+                                    }
+
+                                    isPostePayBloccata = reader.GetBoolean(reader.GetOrdinal("BloccoCarta"));
+                                    saldoPostePay = reader.GetDecimal(reader.GetOrdinal("Saldo"));
                                 }
+                            }
 
-                                // Check if the BancoPosta account has sufficient funds
-                                string userCF = UserSession.Instance.CF;
-                                string checkBancoPostaQuery = "SELECT Saldo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
-                                using (MySqlCommand checkBancoPostaCommand = new MySqlCommand(checkBancoPostaQuery, connection, transaction))
+                            if (isPostePayBloccata)
+                            {
+                                MessageBox.Show("La carta PostePay selezionata è bloccata.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return false;
+                            }
+
+                            // Check if the BancoPosta account exists and is not blocked
+                            string userCF = UserSession.Instance.CF;
+                            decimal saldoBancoPosta;
+                            bool isBancoPostaBloccata;
+
+                            string checkBancoPostaQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
+                            using (MySqlCommand checkBancoPostaCommand = new MySqlCommand(checkBancoPostaQuery, connection, transaction))
+                            {
+                                checkBancoPostaCommand.Parameters.AddWithValue("@CF", userCF);
+
+                                using (MySqlDataReader reader = checkBancoPostaCommand.ExecuteReader())
                                 {
-                                    checkBancoPostaCommand.Parameters.AddWithValue("@CF", userCF);
-                                    object bancoPostaResult = checkBancoPostaCommand.ExecuteScalar();
-
-                                    if (bancoPostaResult == null)
+                                    if (!reader.Read())
                                     {
                                         MessageBox.Show("Account BancoPosta non trovato.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
                                         return false;
                                     }
 
-                                    decimal saldoBancoPosta = Convert.ToDecimal(bancoPostaResult);
-
-                                    if (saldoBancoPosta < importo)
-                                    {
-                                        MessageBox.Show("Saldo BancoPosta insufficiente.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
-                                        return false;
-                                    }
-
-                                    // Deduct the amount from BancoPosta
-                                    decimal nuovoSaldoBancoPosta = saldoBancoPosta - importo;
-                                    string updateBancoPostaQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE CF = @CF AND Tipo = 'BancoPosta'";
-
-                                    using (MySqlCommand updateBancoPostaCommand = new MySqlCommand(updateBancoPostaQuery, connection, transaction))
-                                    {
-                                        updateBancoPostaCommand.Parameters.AddWithValue("@NuovoSaldo", nuovoSaldoBancoPosta);
-                                        updateBancoPostaCommand.Parameters.AddWithValue("@CF", userCF);
-                                        updateBancoPostaCommand.ExecuteNonQuery();
-                                    }
-
-                                    // Add the amount to PostePay
-                                    decimal saldoPostePay = Convert.ToDecimal(result);
-                                    decimal nuovoSaldoPostePay = saldoPostePay + importo;
-                                    string updatePostePayQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE Iban = @Iban AND Tipo = 'PostePay'";
-
-                                    using (MySqlCommand updatePostePayCommand = new MySqlCommand(updatePostePayQuery, connection, transaction))
-                                    {
-                                        updatePostePayCommand.Parameters.AddWithValue("@NuovoSaldo", nuovoSaldoPostePay);
-                                        updatePostePayCommand.Parameters.AddWithValue("@Iban", iban);
-                                        updatePostePayCommand.ExecuteNonQuery();
-                                    }
-
-                                    //add the transaction to the database
-                                    string codTransazione = Guid.NewGuid().ToString();
-                                    string queryTransazione = "INSERT INTO TRANSAZIONE (CodTransazione, Importo, Data, NumeroIdentificativo) VALUES (@CodTransazione, @Importo, @Data, @NumeroIdentificativo)";
-                                    using (MySqlCommand commandTransazione = new MySqlCommand(queryTransazione, connection, transaction))
-                                    {
-                                        commandTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
-                                        commandTransazione.Parameters.AddWithValue("@Importo", importo);
-                                        commandTransazione.Parameters.AddWithValue("@Data", DateTime.Now);
-                                        commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-
-                                        commandTransazione.ExecuteNonQuery();
-                                        Console.WriteLine("Query TRANSAZIONE eseguita con successo.");
-                                    }
-                                    string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale, Ente, Commissione, TipologiaPagamento, NumeroIdentificativo) " +
-                       "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale, @Ente, @Commissione, @TipologiaPagamento, @NumeroIdentificativo)";
-                                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
-                                    {
-                                        commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // use the same CodTransazione
-                                        commandTipoTransazione.Parameters.AddWithValue("@Tipo", tipo);
-                                        commandTipoTransazione.Parameters.AddWithValue("@IbanDestinatario", iban);
-                                        commandTipoTransazione.Parameters.AddWithValue("@Causale", causale);
-                                        commandTipoTransazione.Parameters.AddWithValue("@Ente", ente);
-                                        commandTipoTransazione.Parameters.AddWithValue("@Commissione", commissione);
-                                        commandTipoTransazione.Parameters.AddWithValue("@TipologiaPagamento", tipologiaPagamento);
-                                        commandTipoTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-
-                                        commandTipoTransazione.ExecuteNonQuery();
-                                        Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
-                                    }
-                                    //add the notification to the database
-                                    string CF = UserSession.Instance.CF;
-                                    bool Letta = false;
-                                    string Testo = $"Ricarica di {importo:C} effettuata sulla carta con IBAN: {iban}";
-                                    string Titolo = $"Ricarica Effettuata";
-                                    string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) " +
-                                        "VALUES (@Titolo, @Testo, @Letta, @CF)";
-                                    using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryNotifica, connection, transaction))
-                                    {
-                                        commandTipoTransazione.Parameters.AddWithValue("@Titolo", Titolo);
-                                        commandTipoTransazione.Parameters.AddWithValue("@Testo", Testo);
-                                        commandTipoTransazione.Parameters.AddWithValue("@Letta", Letta);
-                                        commandTipoTransazione.Parameters.AddWithValue("@CF", CF);
-
-                                        commandTipoTransazione.ExecuteNonQuery();
-                                    }
+                                    isBancoPostaBloccata = reader.GetBoolean(reader.GetOrdinal("BloccoCarta"));
+                                    saldoBancoPosta = reader.GetDecimal(reader.GetOrdinal("Saldo"));
                                 }
+                            }
+
+                            if (isBancoPostaBloccata)
+                            {
+                                MessageBox.Show("L'account BancoPosta selezionato è bloccato.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return false;
+                            }
+
+                            if (saldoBancoPosta < importo)
+                            {
+                                MessageBox.Show("Saldo BancoPosta insufficiente.", "Errore", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return false;
+                            }
+
+                            // Deduct the amount from BancoPosta
+                            decimal nuovoSaldoBancoPosta = saldoBancoPosta - importo;
+                            string updateBancoPostaQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE CF = @CF AND Tipo = 'BancoPosta'";
+
+                            using (MySqlCommand updateBancoPostaCommand = new MySqlCommand(updateBancoPostaQuery, connection, transaction))
+                            {
+                                updateBancoPostaCommand.Parameters.AddWithValue("@NuovoSaldo", nuovoSaldoBancoPosta);
+                                updateBancoPostaCommand.Parameters.AddWithValue("@CF", userCF);
+                                updateBancoPostaCommand.ExecuteNonQuery();
+                            }
+
+                            // Add the amount to PostePay
+                            decimal nuovoSaldoPostePay = saldoPostePay + importo;
+                            string updatePostePayQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE Iban = @Iban AND Tipo = 'PostePay'";
+
+                            using (MySqlCommand updatePostePayCommand = new MySqlCommand(updatePostePayQuery, connection, transaction))
+                            {
+                                updatePostePayCommand.Parameters.AddWithValue("@NuovoSaldo", nuovoSaldoPostePay);
+                                updatePostePayCommand.Parameters.AddWithValue("@Iban", iban);
+                                updatePostePayCommand.ExecuteNonQuery();
+                            }
+
+                            // Add the transaction to the database
+                            string codTransazione = Guid.NewGuid().ToString();
+                            string queryTransazione = "INSERT INTO TRANSAZIONE (CodTransazione, Importo, Data, NumeroIdentificativo) VALUES (@CodTransazione, @Importo, @Data, @NumeroIdentificativo)";
+                            using (MySqlCommand commandTransazione = new MySqlCommand(queryTransazione, connection, transaction))
+                            {
+                                commandTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
+                                commandTransazione.Parameters.AddWithValue("@Importo", importo);
+                                commandTransazione.Parameters.AddWithValue("@Data", DateTime.Now);
+                                commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                                commandTransazione.ExecuteNonQuery();
+                                Console.WriteLine("Query TRANSAZIONE eseguita con successo.");
+                            }
+
+                            string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale, Ente, Commissione, TipologiaPagamento, NumeroIdentificativo) " +
+                                "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale, @Ente, @Commissione, @TipologiaPagamento, @NumeroIdentificativo)";
+                            using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
+                            {
+                                commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // use the same CodTransazione
+                                commandTipoTransazione.Parameters.AddWithValue("@Tipo", tipo);
+                                commandTipoTransazione.Parameters.AddWithValue("@IbanDestinatario", iban);
+                                commandTipoTransazione.Parameters.AddWithValue("@Causale", causale);
+                                commandTipoTransazione.Parameters.AddWithValue("@Ente", ente);
+                                commandTipoTransazione.Parameters.AddWithValue("@Commissione", commissione);
+                                commandTipoTransazione.Parameters.AddWithValue("@TipologiaPagamento", tipologiaPagamento);
+                                commandTipoTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                                commandTipoTransazione.ExecuteNonQuery();
+                                Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
+                            }
+
+                            // Add the notification to the database
+                            string CF = UserSession.Instance.CF;
+                            bool Letta = false;
+                            string Testo = $"Ricarica di {importo:C} effettuata sulla carta con IBAN: {iban}";
+                            string Titolo = $"Ricarica Effettuata";
+                            string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) " +
+                                "VALUES (@Titolo, @Testo, @Letta, @CF)";
+                            using (MySqlCommand commandNotifica = new MySqlCommand(queryNotifica, connection, transaction))
+                            {
+                                commandNotifica.Parameters.AddWithValue("@Titolo", Titolo);
+                                commandNotifica.Parameters.AddWithValue("@Testo", Testo);
+                                commandNotifica.Parameters.AddWithValue("@Letta", Letta);
+                                commandNotifica.Parameters.AddWithValue("@CF", CF);
+
+                                commandNotifica.ExecuteNonQuery();
                             }
 
                             transaction.Commit();
