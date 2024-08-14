@@ -131,7 +131,7 @@ namespace PosteItaliane.Pages
         {
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
                 string query = "UPDATE CARTA SET BloccoCarta = @BloccoCarta WHERE NumeroIdentificativo = @NumeroIdentificativo";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
