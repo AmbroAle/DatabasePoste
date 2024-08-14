@@ -65,7 +65,7 @@ namespace PosteItaliane.Pages
         {
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
                 string query = "INSERT INTO UTENTE (CF, Nome, Cognome, Ind_Via, Ind_Civico, Ind_Residenza, Ind_Provincia) " +
                                "VALUES (@CF, @Nome, @Cognome, @Ind_Via, @Ind_Civico, @Ind_Residenza, @Ind_Provincia)";
                 string query2 = "INSERT INTO ACCOUNT (CF, BloccoAccount, Email, Password) " +

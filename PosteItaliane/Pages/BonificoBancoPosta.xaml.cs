@@ -75,7 +75,7 @@ namespace PosteItaliane.Pages
             string ente = "Poste Italiane";
             string tipologiaPagamento = "online";
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
-            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {

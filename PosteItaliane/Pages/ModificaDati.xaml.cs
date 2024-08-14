@@ -34,7 +34,7 @@ namespace PosteItaliane.Pages
         private void btnAggiorna_Click(object sender, RoutedEventArgs e)
         {
             // Connessione al database
-            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
             bool emailChanged = false;
             bool passwordChanged = false;
 

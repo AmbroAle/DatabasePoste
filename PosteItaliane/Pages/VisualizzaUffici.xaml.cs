@@ -34,7 +34,7 @@ namespace PosteItaliane.Pages
         {
             try
             {
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
                 string query = "SELECT * FROM UFFICIO_POSTALE";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))

@@ -38,7 +38,7 @@ namespace PosteItaliane.Pages
                     return;
                 }
 
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
                 string query = "SELECT * FROM NOTIFICA WHERE CF = @CF";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))

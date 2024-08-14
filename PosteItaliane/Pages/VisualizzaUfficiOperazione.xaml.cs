@@ -22,7 +22,7 @@ namespace PosteItaliane.Pages
             try
             {
                 // La stringa di connessione al database MySQL
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
 
                 // Query con parametro per selezionare i movimenti
                 string query = @"

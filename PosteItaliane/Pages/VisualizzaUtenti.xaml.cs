@@ -38,7 +38,7 @@ namespace PosteItaliane.Pages
                     return;
                 }
 
-                string connStr = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+                string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
                 string query = "SELECT * FROM ACCOUNT WHERE Amministratore = 0";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))

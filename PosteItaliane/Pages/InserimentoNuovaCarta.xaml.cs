@@ -55,7 +55,7 @@ namespace PosteItaliane.Pages
             }
 
             // Preparazione della connessione a MySQL
-            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {

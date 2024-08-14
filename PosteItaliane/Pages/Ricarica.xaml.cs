@@ -26,7 +26,7 @@ namespace PosteItaliane.Pages
 
         private void LoadCards()
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
             string query = "SELECT Iban FROM CARTA WHERE CF = @CF AND Tipo = 'PostePay'";
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
 
@@ -105,7 +105,7 @@ namespace PosteItaliane.Pages
 
         private bool MakeRicarica(decimal importo, string iban)
         {
-            string connectionString = "server=localhost;uid=root;pwd=;database=PosteItalianeDatabase";
+            string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
             float commissione = 0;
             string ente = "Poste Italiane";
             string tipologiaPagamento = "online";
