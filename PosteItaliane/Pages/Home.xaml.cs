@@ -28,7 +28,11 @@ namespace PosteItaliane.Pages
             InitializeComponent();
             LoadData();
         }
-
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToPage(new Login());
+        }
         private void LoadData()
         {
             string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
