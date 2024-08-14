@@ -40,7 +40,7 @@ namespace PosteItaliane.Pages
             string tipo = "PostePay";
             decimal saldo = 0;
             string cf = UserSession.Instance.CF;
-
+            bool BloccoCarta = false;
             DateTime dataCorrente = DateTime.Now;
             // Imposta la scadenza a 4 anni dopo la data corrente
             DateTime scadenza = dataCorrente.AddYears(4);
@@ -68,12 +68,13 @@ namespace PosteItaliane.Pages
                         // Query per l'inserimento della nuova carta
                         string insertCartaQuery = @"
                             INSERT INTO CARTA 
-                            (NumeroIdentificativo, Ccv, Pin, Scadenza, Saldo, Iban, Tipo, CF) 
+                            (BloccoCarta,NumeroIdentificativo, Ccv, Pin, Scadenza, Saldo, Iban, Tipo, CF) 
                             VALUES 
-                            (@NumeroIdentificativo, @Ccv, @Pin, @Scadenza, @Saldo, @Iban, @Tipo, @CF)";
+                            (@BloccoCarta,@NumeroIdentificativo, @Ccv, @Pin, @Scadenza, @Saldo, @Iban, @Tipo, @CF)";
 
                         using (MySqlCommand command = new MySqlCommand(insertCartaQuery, connection, transaction))
                         {
+                            command.Parameters.AddWithValue("@BloccoCarta", BloccoCarta);
                             command.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
                             command.Parameters.AddWithValue("@Ccv", ccv);
                             command.Parameters.AddWithValue("@Pin", pin);
