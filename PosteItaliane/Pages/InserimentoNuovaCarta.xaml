@@ -194,9 +194,9 @@
                            FontSize="14"
                            FontWeight="Medium"
                            FontFamily="Montserrat"                             
-                           Margin="110,48,0,0"
-                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                           HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" RenderTransformOrigin="1.187,0.553" Grid.RowSpan="4"/>
+                           Margin="110,4,0,0"
+                           Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                           HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" RenderTransformOrigin="1.187,0.553"/>
 
                 <TextBox x:Name="txtCCV"
                          FontSize="13"
@@ -220,7 +220,7 @@
                 FontSize="14"
                 FontFamily="Montserrat"
                 Cursor="Hand"
-                Margin="0,134,0,-84"
+                Margin="0,172,0,-122"
                 Click="btnInserisciCarta_Click"
                 Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
                     <Button.Style>
@@ -261,7 +261,7 @@
                     FontSize="14"
                     FontWeight="Medium"
                     FontFamily="Montserrat"                             
-                    Margin="110,46,0,0"
+                    Margin="110,60,0,0"
                     Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                     HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" RenderTransformOrigin="1.187,0.553"/>
                 <TextBox x:Name="txtPin"
@@ -276,6 +276,26 @@
                     VerticalContentAlignment="Center"
                     Margin="2,59,-2,20"
                     Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="txtTipoCarta"
+                    FontSize="13"
+                    FontWeight="Medium"
+                    FontFamily="Montserrat"                            
+                    Foreground="Black"
+                    CaretBrush="LightGray"
+                    BorderBrush="Black"
+                    BorderThickness="0,0,0,2"
+                    Height="28"
+                    VerticalContentAlignment="Center"
+                    Margin="0,133,0,-19"
+                    Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="txtPin_Copia_TextChanged"/>
+                <TextBlock Text="Tipo Carta"
+                    Foreground="Black"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    FontFamily="Montserrat"                             
+                    Margin="89,118,0,7"
+                    Grid.Row="4" Grid.Column="0"
+                    HorizontalAlignment="Left" RenderTransformOrigin="1.187,0.553" Grid.ColumnSpan="2"/>
             </Grid>
         </Grid>
     </Border>

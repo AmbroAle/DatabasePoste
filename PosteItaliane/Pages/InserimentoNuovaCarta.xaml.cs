@@ -37,7 +37,7 @@ namespace PosteItaliane.Pages
             string ccv = txtCCV.Text;
             string pin = txtPin.Text;
             string iban = txtIban.Text;
-            string tipo = "PostePay";
+            string tipo = txtTipoCarta.Text;
             decimal saldo = 0;
             string cf = UserSession.Instance.CF;
             bool BloccoCarta = false;
@@ -125,5 +125,9 @@ namespace PosteItaliane.Pages
             return numeroIdentificativo.Substring(0, 16); // Assicura che sia lungo 16 cifre
         }
 
+        private void txtPin_Copia_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

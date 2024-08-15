@@ -119,12 +119,11 @@ namespace PosteItaliane.Pages
                 {
                     connection.Open();
 
-                    // Start a transaction to ensure data consistency
                     using (MySqlTransaction transaction = connection.BeginTransaction())
                     {
                         try
                         {
-                            // Check if the IBAN selected for PostePay exists and is not blocked
+                            // Verifica se la carta PostePay esiste e non è bloccata
                             string checkPostePayQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE Iban = @Iban AND Tipo = 'PostePay'";
                             decimal saldoPostePay;
                             bool isPostePayBloccata;
@@ -152,15 +151,16 @@ namespace PosteItaliane.Pages
                                 return false;
                             }
 
-                            // Check if the BancoPosta account exists and is not blocked
+                            // Verifica se l'account BancoPosta esiste e non è bloccato
                             string userCF = UserSession.Instance.CF;
                             decimal saldoBancoPosta;
                             bool isBancoPostaBloccata;
+                            string checkBancoPostaQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta' AND NumeroIdentificativo = @NumeroIdentificativo";
 
-                            string checkBancoPostaQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
                             using (MySqlCommand checkBancoPostaCommand = new MySqlCommand(checkBancoPostaQuery, connection, transaction))
                             {
                                 checkBancoPostaCommand.Parameters.AddWithValue("@CF", userCF);
+                                checkBancoPostaCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
 
                                 using (MySqlDataReader reader = checkBancoPostaCommand.ExecuteReader())
                                 {
@@ -187,18 +187,19 @@ namespace PosteItaliane.Pages
                                 return false;
                             }
 
-                            // Deduct the amount from BancoPosta
+                            // Deduzione dell'importo dal saldo BancoPosta
                             decimal nuovoSaldoBancoPosta = saldoBancoPosta - importo;
-                            string updateBancoPostaQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE CF = @CF AND Tipo = 'BancoPosta'";
+                            string updateBancoPostaQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE CF = @CF AND Tipo = 'BancoPosta' AND NumeroIdentificativo = @NumeroIdentificativo";
 
                             using (MySqlCommand updateBancoPostaCommand = new MySqlCommand(updateBancoPostaQuery, connection, transaction))
                             {
                                 updateBancoPostaCommand.Parameters.AddWithValue("@NuovoSaldo", nuovoSaldoBancoPosta);
                                 updateBancoPostaCommand.Parameters.AddWithValue("@CF", userCF);
+                                updateBancoPostaCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
                                 updateBancoPostaCommand.ExecuteNonQuery();
                             }
 
-                            // Add the amount to PostePay
+                            // Aggiunta dell'importo al saldo PostePay
                             decimal nuovoSaldoPostePay = saldoPostePay + importo;
                             string updatePostePayQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE Iban = @Iban AND Tipo = 'PostePay'";
 
@@ -209,25 +210,26 @@ namespace PosteItaliane.Pages
                                 updatePostePayCommand.ExecuteNonQuery();
                             }
 
-                            // Add the transaction to the database
+                            // Inserimento della transazione
                             string codTransazione = Guid.NewGuid().ToString();
                             string queryTransazione = "INSERT INTO TRANSAZIONE (CodTransazione, Importo, Data, NumeroIdentificativo) VALUES (@CodTransazione, @Importo, @Data, @NumeroIdentificativo)";
+
                             using (MySqlCommand commandTransazione = new MySqlCommand(queryTransazione, connection, transaction))
                             {
                                 commandTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
                                 commandTransazione.Parameters.AddWithValue("@Importo", importo);
                                 commandTransazione.Parameters.AddWithValue("@Data", DateTime.Now);
                                 commandTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-
                                 commandTransazione.ExecuteNonQuery();
-                                Console.WriteLine("Query TRANSAZIONE eseguita con successo.");
                             }
 
+                            // Inserimento nel tipo di transazione
                             string queryTipoTransazione = "INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, IbanDestinatario, Causale, Ente, Commissione, TipologiaPagamento, NumeroIdentificativo) " +
-                                "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale, @Ente, @Commissione, @TipologiaPagamento, @NumeroIdentificativo)";
+                                                          "VALUES (@CodTransazione, @Tipo, @IbanDestinatario, @Causale, @Ente, @Commissione, @TipologiaPagamento, @NumeroIdentificativo)";
+
                             using (MySqlCommand commandTipoTransazione = new MySqlCommand(queryTipoTransazione, connection, transaction))
                             {
-                                commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione); // use the same CodTransazione
+                                commandTipoTransazione.Parameters.AddWithValue("@CodTransazione", codTransazione);
                                 commandTipoTransazione.Parameters.AddWithValue("@Tipo", tipo);
                                 commandTipoTransazione.Parameters.AddWithValue("@IbanDestinatario", iban);
                                 commandTipoTransazione.Parameters.AddWithValue("@Causale", causale);
@@ -235,25 +237,22 @@ namespace PosteItaliane.Pages
                                 commandTipoTransazione.Parameters.AddWithValue("@Commissione", commissione);
                                 commandTipoTransazione.Parameters.AddWithValue("@TipologiaPagamento", tipologiaPagamento);
                                 commandTipoTransazione.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-
                                 commandTipoTransazione.ExecuteNonQuery();
-                                Console.WriteLine("Query TIPO_TRANSAZIONE eseguita con successo.");
                             }
 
-                            // Add the notification to the database
+                            // Inserimento della notifica
                             string CF = UserSession.Instance.CF;
                             bool Letta = false;
                             string Testo = $"Ricarica di {importo:C} effettuata sulla carta con IBAN: {iban}";
-                            string Titolo = $"Ricarica Effettuata";
-                            string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) " +
-                                "VALUES (@Titolo, @Testo, @Letta, @CF)";
+                            string Titolo = "Ricarica Effettuata";
+                            string queryNotifica = "INSERT INTO notifica (Titolo, Testo, Letta, CF) VALUES (@Titolo, @Testo, @Letta, @CF)";
+
                             using (MySqlCommand commandNotifica = new MySqlCommand(queryNotifica, connection, transaction))
                             {
                                 commandNotifica.Parameters.AddWithValue("@Titolo", Titolo);
                                 commandNotifica.Parameters.AddWithValue("@Testo", Testo);
                                 commandNotifica.Parameters.AddWithValue("@Letta", Letta);
                                 commandNotifica.Parameters.AddWithValue("@CF", CF);
-
                                 commandNotifica.ExecuteNonQuery();
                             }
 
@@ -262,7 +261,6 @@ namespace PosteItaliane.Pages
                         }
                         catch
                         {
-                            // Rollback in case of error
                             transaction.Rollback();
                             throw;
                         }

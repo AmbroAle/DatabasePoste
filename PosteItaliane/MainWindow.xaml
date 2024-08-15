@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PosteItaliane"
         mc:Ignorable="d"
-        Title="LoginView" Height="550" Width="800"
+        Title="PosteItaliane" Height="550" Width="800"
         WindowStyle="ThreeDBorderWindow"
         ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
