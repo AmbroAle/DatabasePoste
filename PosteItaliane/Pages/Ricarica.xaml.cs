@@ -27,7 +27,7 @@ namespace PosteItaliane.Pages
         private void LoadCards()
         {
             string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
-            string query = "SELECT Iban FROM CARTA WHERE CF = @CF AND Tipo = 'PostePay'";
+            string query = "SELECT Iban FROM CARTA WHERE CF = @CF AND NumeroIdentificativo != @NumeroIdentificativo";
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
 
             try
@@ -38,12 +38,13 @@ namespace PosteItaliane.Pages
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@CF", UserSession.Instance.CF);
+                        command.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo); // Aggiungi questo parametro
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             TipoBonificoComboBox.Items.Clear(); // Pulisci gli elementi esistenti
                             while (reader.Read())
                             {
-                                // Usare ?? "" per garantire che non ci siano valori nulli
                                 string iban = reader["Iban"].ToString() ?? "";
                                 ComboBoxItem item = new ComboBoxItem
                                 {
@@ -54,7 +55,7 @@ namespace PosteItaliane.Pages
 
                             if (TipoBonificoComboBox.Items.Count == 0)
                             {
-                                MessageBox.Show("Non hai carte PostePay disponibili.", "Informazione", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Non hai carte disponibili.", "Informazione", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
                     }
@@ -124,7 +125,7 @@ namespace PosteItaliane.Pages
                         try
                         {
                             // Verifica se la carta PostePay esiste e non è bloccata
-                            string checkPostePayQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE Iban = @Iban AND Tipo = 'PostePay'";
+                            string checkPostePayQuery = "SELECT Saldo, BloccoCarta FROM CARTA WHERE Iban = @Iban";
                             decimal saldoPostePay;
                             bool isPostePayBloccata;
 
