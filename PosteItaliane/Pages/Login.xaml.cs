@@ -80,8 +80,15 @@ namespace PosteItaliane.Pages
             try
             {
                 string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
-                string query = "SELECT Password, CF, Amministratore, BloccoAccount FROM ACCOUNT WHERE Email = @Email";
-                string queryCarta = "SELECT NumeroIdentificativo FROM CARTA WHERE CF = @CF AND Tipo = 'BancoPosta'";
+                string query = "" +
+                    "SELECT Password, CF, Amministratore, BloccoAccount " +
+                    "FROM ACCOUNT " +
+                    "WHERE Email = @Email";
+                string queryCarta = "" +
+                    "SELECT NumeroIdentificativo " +
+                    "FROM CARTA " +
+                    "WHERE CF = @CF " +
+                    "AND Tipo = 'BancoPosta'";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {

@@ -190,7 +190,12 @@ namespace PosteItaliane.Pages
 
                             // Deduzione dell'importo dal saldo BancoPosta
                             decimal nuovoSaldoBancoPosta = saldoBancoPosta - importo;
-                            string updateBancoPostaQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE CF = @CF AND Tipo = 'BancoPosta' AND NumeroIdentificativo = @NumeroIdentificativo";
+                            string updateBancoPostaQuery = "" +
+                                "UPDATE CARTA " +
+                                "SET Saldo = @NuovoSaldo " +
+                                "WHERE CF = @CF " +
+                                "AND Tipo = 'BancoPosta' " +
+                                "AND NumeroIdentificativo = @NumeroIdentificativo";
 
                             using (MySqlCommand updateBancoPostaCommand = new MySqlCommand(updateBancoPostaQuery, connection, transaction))
                             {

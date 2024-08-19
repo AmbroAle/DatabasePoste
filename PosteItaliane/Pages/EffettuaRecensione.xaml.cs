@@ -97,27 +97,14 @@ namespace PosteItaliane.Pages
 
                 string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
 
-                // Trova il valore massimo attuale di Id
-                int nextId;
-                using (MySqlConnection conn = new MySqlConnection(connStr))
-                {
-                    conn.Open();
-                    string maxIdQuery = "SELECT COALESCE(MAX(Id), 0) + 1 FROM RECENSIONE";
-                    using (MySqlCommand cmd = new MySqlCommand(maxIdQuery, conn))
-                    {
-                        nextId = Convert.ToInt32(cmd.ExecuteScalar());
-                    }
-                }
-
                 // Inserisci la recensione con il nuovo Id
-                string query = "INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) VALUES (@id, @testo, @voto, @data, @cf, @ass_id)";
+                string query = "INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) VALUES (@testo, @voto, @data, @cf, @ass_id)";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@id", nextId);
                         cmd.Parameters.AddWithValue("@testo", descrizione);
                         cmd.Parameters.AddWithValue("@voto", voto);
                         cmd.Parameters.AddWithValue("@data", DateTime.Now);
