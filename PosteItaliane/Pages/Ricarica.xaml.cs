@@ -107,7 +107,7 @@ namespace PosteItaliane.Pages
         private bool MakeRicarica(decimal importo, string iban)
         {
             string connectionString = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
-            float commissione = 0;
+            float commissione = 1;
             string ente = "Poste Italiane";
             string tipologiaPagamento = "online";
             string numeroIdentificativo = UserSession.Instance.NumeroIdentificativo;
@@ -189,7 +189,7 @@ namespace PosteItaliane.Pages
                             }
 
                             // Deduzione dell'importo dal saldo BancoPosta
-                            decimal nuovoSaldoBancoPosta = saldoBancoPosta - importo;
+                            decimal nuovoSaldoBancoPosta = saldoBancoPosta - (importo + 1);
                             string updateBancoPostaQuery = "UPDATE CARTA SET Saldo = @NuovoSaldo WHERE CF = @CF AND Tipo = 'BancoPosta' AND NumeroIdentificativo = @NumeroIdentificativo";
 
                             using (MySqlCommand updateBancoPostaCommand = new MySqlCommand(updateBancoPostaQuery, connection, transaction))

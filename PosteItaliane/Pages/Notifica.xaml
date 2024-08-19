@@ -19,7 +19,7 @@
           Margin="0,10,0,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="*"/>
-                <DataGridTextColumn Header="Tipo" Binding="{Binding Titolo}" Width="*"/>
+                <DataGridTextColumn Header="Titolo" Binding="{Binding Titolo}" Width="*"/>
                 <DataGridTextColumn Header="Testo" Binding="{Binding Testo}" Width="*"/>
                 <DataGridTextColumn Header="Letta" Binding="{Binding Letta, StringFormat={}{0:True=Letto;False=Non letto}}" Width="*"/>
             </DataGrid.Columns>
