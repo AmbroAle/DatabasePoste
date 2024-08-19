@@ -36,9 +36,10 @@ namespace PosteItaliane.Pages
         private void LoadData()
         {
             string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
-            string query = "SELECT Saldo FROM CARTA WHERE CF = @CF";
+            string query = "SELECT Saldo FROM CARTA WHERE CF = @CF AND NumeroIdentificativo = @NI";
 
             string cfValue = UserSession.Instance.CF;
+            string numeroidentificativo = UserSession.Instance.NumeroIdentificativo;
 
             try
             {
@@ -48,6 +49,7 @@ namespace PosteItaliane.Pages
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@CF", cfValue);
+                        cmd.Parameters.AddWithValue("@NI",numeroidentificativo);
 
                         object result = cmd.ExecuteScalar();
 
