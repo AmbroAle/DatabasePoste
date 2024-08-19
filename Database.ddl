@@ -101,7 +101,7 @@ create table RECENSIONE (
      primary key (Id));
 
 create table TIPO_TRANSAZIONE (
-     CodTransazione varchar(16) not null,
+     CodTransazione varchar(36) not null,
      Tipo varchar(32) not null,
      Commissione float(2),
      TipologiaPagamento varchar(32),
@@ -113,7 +113,7 @@ create table TIPO_TRANSAZIONE (
      primary key (CodTransazione));
 
 create table TRANSAZIONE (
-     CodTransazione varchar(16) not null,
+     CodTransazione varchar(36) not null,
      Importo float(2) not null,
      Data datetime not null,
      NumeroIdentificativo varchar(16) not null,
