@@ -77,7 +77,7 @@ namespace PosteItaliane.Pages
                     updateQuery.Append(" WHERE CF = @CF");
 
                     // Aggiungi il parametro CF
-                    parameters.Add(new MySqlParameter("@CF", "ABCDEF12G34H567I")); // Sostituisci con il CF dell'utente attuale
+                    parameters.Add(new MySqlParameter("@CF", UserSession.Instance.CF));
 
                     // Esegui l'aggiornamento
                     using (var command = new MySqlCommand(updateQuery.ToString(), connection))
