@@ -91,27 +91,35 @@ namespace PosteItaliane.Pages
                     string codTransazione = Guid.NewGuid().ToString();
 
                     // Verifica se il conto/carta è bloccata
-                    string checkBloccataQuery = "SELECT BloccoCarta FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
+                    string checkBloccataSaldoQuery = "" +
+                        "SELECT BloccoCarta, Saldo " +
+                        "FROM CARTA " +
+                        "WHERE NumeroIdentificativo = @NumeroIdentificativo";
                     bool bloccata;
-                    using (MySqlCommand checkBloccataCommand = new MySqlCommand(checkBloccataQuery, connection, transaction))
+                    float saldo;
+                    using (MySqlCommand checkCommand = new MySqlCommand(checkBloccataSaldoQuery, connection, transaction))
                     {
-                        checkBloccataCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-                        bloccata = Convert.ToBoolean(checkBloccataCommand.ExecuteScalar());
+                        checkCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
+
+                        using (MySqlDataReader reader = checkCommand.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                saldo = reader.GetFloat("Saldo");
+                                bloccata = reader.GetBoolean("BloccoCarta");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Errore: Carta non trovata.");
+                                return false;
+                            }
+                        }
                     }
 
                     if (bloccata)
                     {
                         MessageBox.Show("La carta è bloccata. Impossibile effettuare il bonifico.");
                         return false;
-                    }
-
-                    // Verifica se il conto/carta ha abbastanza saldo
-                    string checkSaldoQuery = "SELECT Saldo FROM CARTA WHERE NumeroIdentificativo = @NumeroIdentificativo";
-                    float saldo;
-                    using (MySqlCommand checkSaldoCommand = new MySqlCommand(checkSaldoQuery, connection, transaction))
-                    {
-                        checkSaldoCommand.Parameters.AddWithValue("@NumeroIdentificativo", numeroIdentificativo);
-                        saldo = Convert.ToSingle(checkSaldoCommand.ExecuteScalar());
                     }
 
                     if (saldo < importo + commissione)
