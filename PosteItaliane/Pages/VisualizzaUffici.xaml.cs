@@ -35,26 +35,49 @@ namespace PosteItaliane.Pages
             try
             {
                 string connStr = "server=localhost;uid=root;pwd=8323;database=PosteItalianeDatabase";
-                string query = "SELECT * FROM UFFICIO_POSTALE";
+
+                // Step 1: Recupera la provincia dell'utente
+                string queryProvincia = "SELECT Ind_Provincia FROM UTENTE WHERE CF = @CF";
+
+                string provinciaUtente = "";
 
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
 
-                    // Creazione del comando e aggiunta del parametro
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (MySqlCommand cmdProvincia = new MySqlCommand(queryProvincia, conn))
                     {
+                        // Imposta il CF dell'utente come parametro
+                        cmdProvincia.Parameters.AddWithValue("@CF", UserSession.Instance.CF);
 
-                        // Esecuzione della query e recupero del risultato
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        // Esegui la query per ottenere la provincia
+                        provinciaUtente = cmdProvincia.ExecuteScalar()?.ToString() ?? string.Empty;
+                    }
+
+                    // Step 2: Se la provincia è stata trovata, carica i dati degli uffici postali
+                    if (!string.IsNullOrEmpty(provinciaUtente))
+                    {
+                        string queryUffici = "SELECT * FROM UFFICIO_POSTALE WHERE Ind_Provincia = @Provincia";
+
+                        using (MySqlCommand cmdUffici = new MySqlCommand(queryUffici, conn))
                         {
-                            DataTable dataTable = new DataTable();
-                            dataTable.Load(reader);
+                            // Imposta la provincia dell'utente come parametro
+                            cmdUffici.Parameters.AddWithValue("@Provincia", provinciaUtente);
 
-                            // Assuming you have a DataGrid or similar control to display the results
-                            UfficiDataGrid.ItemsSource = dataTable.DefaultView;
+                            // Esegui la query e recupera i risultati
+                            using (MySqlDataReader reader = cmdUffici.ExecuteReader())
+                            {
+                                DataTable dataTable = new DataTable();
+                                dataTable.Load(reader);
 
+                                // Visualizza i dati in un DataGrid o controllo simile
+                                UfficiDataGrid.ItemsSource = dataTable.DefaultView;
+                            }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Provincia dell'utente non trovata.");
                     }
                 }
             }
