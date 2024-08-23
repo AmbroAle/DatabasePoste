@@ -68,20 +68,20 @@ VALUES
     ('T10', 50.00, '2024-08-15 14:00:00', '1234567890123456'),
     ('T11', 25.00, '2024-08-20 09:45:00', '1234567890123456');
     
-INSERT INTO BANCOMAT (Id, Commissione, Tipo, Via, Comune, Provincia, Civico, Regione)
-VALUES (1001, 1, 'PostaMat', null, null, null, null, null);
+INSERT INTO BANCOMAT (Id, Tipo, Via, Comune, Provincia, Civico, Regione)
+VALUES (1001, 'PostaMat', null, null, null, null, null);
 
-INSERT INTO BANCOMAT (Id, Commissione, Tipo, Via, Comune, Provincia, Civico, Regione)
-VALUES (1002, 1, 'PostaMat', null, null, null, null, null);
+INSERT INTO BANCOMAT (Id, Tipo, Via, Comune, Provincia, Civico, Regione)
+VALUES (1002, 'PostaMat', null, null, null, null, null);
 
-INSERT INTO BANCOMAT (Id, Commissione, Tipo, Via, Comune, Provincia, Civico, Regione)
-VALUES (1003, 1.0, 'PostaMat', null, null, null, null, null);
+INSERT INTO BANCOMAT (Id, Tipo, Via, Comune, Provincia, Civico, Regione)
+VALUES (1003, 'PostaMat', null, null, null, null, null);
 
-INSERT INTO BANCOMAT (Id, Commissione, Tipo, Via, Comune, Provincia, Civico, Regione)
-VALUES (1004, 1, 'PostaMat', null, null, null, null, null);
+INSERT INTO BANCOMAT (Id, Tipo, Via, Comune, Provincia, Civico, Regione)
+VALUES (1004, 'PostaMat', null, null, null, null, null);
 
-INSERT INTO BANCOMAT (Id, Commissione, Tipo, Via, Comune, Provincia, Civico, Regione)
-VALUES (1005, 1, 'PostaMat', null, null, null, null, null);
+INSERT INTO BANCOMAT (Id, Tipo, Via, Comune, Provincia, Civico, Regione)
+VALUES (1005, 'PostaMat', null, null, null, null, null);
     
 INSERT INTO TIPO_TRANSAZIONE (CodTransazione, Tipo, Commissione, TipologiaPagamento, Ente, IbanDestinatario, Causale, NumeroIdentificativo, Id)
 VALUES
@@ -139,32 +139,32 @@ INSERT INTO AUTORIZZAZIONE (Sed_Id, Id) VALUES (5, 5);
 
 -- Popolamento della tabella RECENSIONE
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (1, 'Ottimo servizio, personale molto cortese.', 5, '2023-08-01 10:30:00', 'RSSMRA85M01H501Z', 1);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Ottimo servizio, personale molto cortese.', 5, '2023-08-01 10:30:00', 'RSSMRA85M01H501Z', 1);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (2, 'Servizio buono, ma tempi di attesa lunghi.', 3, '2023-08-02 11:00:00', 'VRDLGI85S01H501Y', 2);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Servizio buono, ma tempi di attesa lunghi.', 3, '2023-08-02 11:00:00', 'VRDLGI85S01H501Y', 2);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (3, 'Esperienza negativa, poca disponibilità del personale.', 2, '2023-08-03 09:45:00', 'BNCLRA85M01H501X', 3);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Esperienza negativa, poca disponibilità del personale.', 2, '2023-08-03 09:45:00', 'BNCLRA85M01H501X', 3);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (4, 'Ufficio pulito e ordinato, ma il servizio potrebbe migliorare.', 4, '2023-08-04 15:20:00', 'PLMLGU85M01H501W', 4);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Ufficio pulito e ordinato, ma il servizio potrebbe migliorare.', 4, '2023-08-04 15:20:00', 'PLMLGU85M01H501W', 4);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (5, 'Personale scortese, esperienza pessima.', 1, '2023-08-05 14:00:00', 'MNCLGI85S01H501V', 5);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Personale scortese, esperienza pessima.', 1, '2023-08-05 14:00:00', 'MNCLGI85S01H501V', 5);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (6, 'Servizio eccellente, ritornerò sicuramente.', 5, '2023-08-06 10:00:00', 'RSSMRA85M01H501Z', 1);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Servizio eccellente, ritornerò sicuramente.', 5, '2023-08-06 10:00:00', 'RSSMRA85M01H501Z', 1);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (7, 'Soddisfatto del servizio, ma tempi di attesa troppo lunghi.', 3, '2023-08-07 11:15:00', 'VRDLGI85S01H501Y', 2);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Soddisfatto del servizio, ma tempi di attesa troppo lunghi.', 3, '2023-08-07 11:15:00', 'VRDLGI85S01H501Y', 2);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (8, 'Personale gentile e disponibile, ma ufficio poco pulito.', 3, '2023-08-08 09:30:00', 'BNCLRA85M01H501X', 3);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Personale gentile e disponibile, ma ufficio poco pulito.', 3, '2023-08-08 09:30:00', 'BNCLRA85M01H501X', 3);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (9, 'Servizio nella media, niente di speciale.', 3, '2023-08-09 16:00:00', 'PLMLGU85M01H501W', 4);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Servizio nella media, niente di speciale.', 3, '2023-08-09 16:00:00', 'PLMLGU85M01H501W', 4);
 
-INSERT INTO RECENSIONE (Id, Testo, Voto, Data, CF, Ass_Id) 
-VALUES (10, 'Esperienza molto positiva, consiglio questo ufficio.', 4, '2023-08-10 13:45:00', 'MNCLGI85S01H501V', 5);
+INSERT INTO RECENSIONE (Testo, Voto, Data, CF, Ass_Id) 
+VALUES ('Esperienza molto positiva, consiglio questo ufficio.', 4, '2023-08-10 13:45:00', 'MNCLGI85S01H501V', 5);
