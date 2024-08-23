@@ -197,7 +197,7 @@
         <TextBox x:Name="txtIdUfficio" HorizontalAlignment="Center" Margin="0,191,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="280,191,0,0" Grid.Row="1" TextWrapping="Wrap" Text="IdUfficio" VerticalAlignment="Top"/>
         <TextBox x:Name="txtDataTime" HorizontalAlignment="Center" Margin="0,214,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Margin="263,216,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Data e time" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="263,216,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Data e orario" VerticalAlignment="Top"/>
 
         <Button Content="Effettua prenotazione" Height="40" Margin="320,257,314,23"
               Foreground="Black"
