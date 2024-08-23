@@ -54,7 +54,6 @@ CREATE TABLE AUTORIZZAZIONE (
 
 create table BANCOMAT (
      Id numeric(10, 0) not null,
-     Commissione float not null,
      Tipo varchar(16) not null,
      Via varchar(100),
      Comune varchar(30),
@@ -92,7 +91,7 @@ create table PRENOTAZIONE (
      primary key (Data));
 
 create table RECENSIONE (
-     Id numeric(10, 0) not null,
+     Id INT AUTO_INCREMENT not null,
      Testo varchar(255) not null,
      Voto numeric(1, 0) not null,
      Data datetime not null,
